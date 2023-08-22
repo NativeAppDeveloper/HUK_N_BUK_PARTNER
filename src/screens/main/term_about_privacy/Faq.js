@@ -51,7 +51,7 @@ const Faq = () => {
         ]
     )
     return (
-        <SafeAreaView style={CommonStyle.container}>
+        <View style={CommonStyle.container}>
             <BackHandler name={'FAQ’s'} />
 
             {
@@ -75,7 +75,7 @@ const Faq = () => {
                     )
                 })}/>
             }
-        </SafeAreaView>
+        </View>
     )
 }
 

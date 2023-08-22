@@ -52,7 +52,7 @@ const Notification = () => {
         ]
     )
     return (
-        <SafeAreaView style={CommonStyle.container}>
+        <View style={CommonStyle.container}>
             <BackHandler name={'Notifications'} />
 
             {
@@ -75,7 +75,7 @@ const Notification = () => {
                     )
                 })}/>
             }
-        </SafeAreaView>
+        </View>
     )
 }
 const styles = StyleSheet.create({})

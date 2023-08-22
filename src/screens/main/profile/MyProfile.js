@@ -30,7 +30,7 @@ const MyProfile = () => {
 
 
     return (
-        <SafeAreaView style={CommonStyle.container}>
+        <View style={CommonStyle.container}>
             <BackHandler name={'My Profile'} />
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.conatiner}>
@@ -88,7 +88,7 @@ const MyProfile = () => {
             <View style={{ marginVertical: moderateScale(20) }}>
                 <Button onPress={() => setEdit(!edit)} text={'Edit Profile'} />
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -99,7 +99,7 @@ const InputWithHeading = ({ heading, edit, value, onChangeText }) => {
             <Text14 color={colors.theme} text={heading} />
             <View style={{
                 borderWidth: edit ? 1 : 0,
-                paddingVertical: Platform.OS == 'ios' ? moderateScale(4) : moderateScale(2),
+                paddingVertical: Platform.OS == 'ios' ? moderateScale(15) : moderateScale(2),
                 borderColor: colors.placeholderColor,
                 borderRadius: 8,
                 marginTop: moderateScale(12),

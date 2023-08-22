@@ -10,7 +10,10 @@ export const colors={
     red:'red',
     green:'green',
     blue:'#70A6E8',
-    orange:'#F7954A'
+    orange:'#F7954A',
+    bg:'#f6f6f6',
+    secondry:'#8E92A8',
+    borderC:'#E4E9F2'
 }
 
 export const fonts={

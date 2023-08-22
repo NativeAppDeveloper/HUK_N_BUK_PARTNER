@@ -9,7 +9,7 @@ const Text12=(props)=> {
     <Text
       style={{
         fontSize: moderateScale(11),
-        lineHeight: lineHeight ? lineHeight :moderateScale(10),
+        lineHeight: lineHeight ? lineHeight :moderateScale(12),
         fontFamily: fontFamily ? fontFamily : fonts.medium,
         color: color ? color : colors.black,
         textAlign:textAlign?textAlign:'left',

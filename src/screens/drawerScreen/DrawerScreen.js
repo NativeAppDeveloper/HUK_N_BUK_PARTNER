@@ -1,5 +1,5 @@
 
-import { View, Text, ImageBackground, useWindowDimensions, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, useWindowDimensions, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { images } from '../../utils/Image'
@@ -11,28 +11,10 @@ import Text18 from '../../component/customText/Text18'
 import { useNavigation } from '@react-navigation/native'
 
 
-const DrawerScreen = () => {
-    const navigation=useNavigation()
+const DrawerScreen = (props) => {
+    // const navigation=useNavigation()
     const { width, height } = useWindowDimensions('screen')
     const drawerData = {
-        first: [
-            {
-                name: 'Notifaction',
-                title: 'My Profile'
-            },
-            {
-                name: 'Notification',
-                title: 'Notification'
-            },
-            {
-                name: 'MyRides',
-                title: 'My Rides'
-            },
-            {
-                name: 'Notification',
-                title: 'Wallet'
-            },
-        ],
         first: [
             {
                 name: 'MyProfile',
@@ -43,7 +25,7 @@ const DrawerScreen = () => {
                 title: 'Notification'
             },
             {
-                name: 'Notification',
+                name: 'MyRide',
                 title: 'My Rides'
             },
             {
@@ -53,22 +35,20 @@ const DrawerScreen = () => {
         ],
         second: [
             {
-                name: 'MyProfile',
-                title: 'My Profile'
+                name: 'Setting',
+                title: 'Settings'
             },
             {
-                name: 'Notification',
-                title: 'Notification'
+                name: 'HelpAndSupport',
+                title: 'Help & Support'
             },
             {
-                name: 'Notification',
-                title: 'My Rides'
+                name: 'AboutApp',
+                title: 'Refund Policy'
             },
-            {
-                name: 'Notification',
-                title: 'Wallet'
-            },
+    
         ],
+
         third: [
             {
                 name: 'AboutApp',
@@ -91,7 +71,7 @@ const DrawerScreen = () => {
     }
 
     const navigationHandler=(name,title)=>{
-        navigation.navigate(name,{screen:title})
+        props.navigation.navigate(name,{screen:title})
     }
     return (
         <ImageBackground resizeMode='stretch' source={images.account} style={[styles.container,{width: width, height: height}]}>
@@ -102,7 +82,7 @@ const DrawerScreen = () => {
 
                 <View style={styles.cancelView}>
                     <View style={styles.cancelBtn}>
-                        <TouchableOpacity onPress={()=>navigation.closeDrawer()}>
+                        <TouchableOpacity onPress={()=>props.navigation.toggleDrawer()}>
                         <XMarkIcon size={moderateScale(40)} color={colors.theme} />
                         </TouchableOpacity>
                     </View>
@@ -157,7 +137,7 @@ const DrawerScreen = () => {
 const styles = StyleSheet.create({
 container:{ backgroundColor: "red", },
 cancelView:{ width: '90%', alignSelf: 'center', flex: 1 },
-cancelBtn:{ alignItems: 'flex-end', marginTop: moderateScale(30) },
+cancelBtn:{ alignItems: 'flex-end', marginTop:Platform.OS=='ios'?moderateScale(5):moderateScale(10) },
 cardContainer:{
     backgroundColor: colors.white, marginVertical: moderateScale(10), borderRadius: moderateScale(8),
     shadowColor: "#000",
@@ -170,7 +150,7 @@ cardContainer:{
 
     elevation: 2,
 },
-imageName:{ padding: moderateScale(15), flexDirection: "row", alignItems: 'center' },
+imageName:{ padding: moderateScale(1), flexDirection: "row", alignItems: 'center',borderBottomWidth:0.5,paddingVertical:moderateScale(10),paddingHorizontal:scale(10),borderColor:colors.placeholderColor },
 imageNameInner:{ height: moderateScale(60), width: moderateScale(60), borderRadius: moderateScale(60), overflow: "hidden" }
 })
 

@@ -42,7 +42,7 @@ const AboutApp = ({ route }) => {
         }
     }
     return (
-        <SafeAreaView style={[CommonStyle.container]}>
+        <View style={[CommonStyle.container]}>
             <BackHandler name={paramData} />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ width: '90%', alignSelf: 'center', marginTop: moderateScale(10) }}>
@@ -72,7 +72,7 @@ const AboutApp = ({ route }) => {
                     }
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
 import { colors } from '../../utils/Styles'
 import { moderateScale, scale } from 'react-native-size-matters'
@@ -13,7 +13,14 @@ export default function Input({
       backgroundColor: colors.white,
       paddingHorizontal: scale(10),
       borderRadius: moderateScale(6),
-      marginTop:mt?mt:0
+      marginTop:mt?mt:0,
+      ...Platform.select({
+        ios:{
+        paddingVertical:moderateScale(14)
+        }
+      }),
+      
+      
 
     }}>
       <TextInput placeholder={placeHolder} />
