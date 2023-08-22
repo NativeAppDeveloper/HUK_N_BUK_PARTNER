@@ -273,6 +273,7 @@ export default function Home() {
                       </View>
 
                       <Button
+                      
                         onPress={() => navigation.navigate('BookRide')}
                         mt={moderateScale(10)}
                         width={'100%'}
