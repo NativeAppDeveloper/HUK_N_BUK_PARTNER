@@ -67,6 +67,8 @@ import bus from '../assets/icon/bus.png'
 import intercity from '../assets/images/intercity.png'
 import outStation from '../assets/images/outStation.png'
 import rentel from '../assets/images/rentel.png'
+import odometer from '../assets/images/odometer.png'
+
 // import profile from '../assets/images/profile.png'
 
 
@@ -80,6 +82,7 @@ export const images={
     intercity:intercity,
     outStation:outStation,
     rentel:rentel,
+    odometer:odometer
     // profile:profile
 }
 

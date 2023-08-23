@@ -37,7 +37,7 @@ export default function Home() {
     // updateState({ ...iState, open: false, i: index });
   }, []);
   //   const { toggle, open, i } = iState;
-  const snapPoints = useMemo(() => ['50%', '55%', '70%'], []);
+  const snapPoints = useMemo(() => ['45%', '55%', '70%'], []);
   return (
     <View style={{flex: 1}}>
       {
@@ -97,7 +97,8 @@ export default function Home() {
         ref={sheetRef}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
-        enableContentPanningGesture={true}>
+        enableContentPanningGesture={true}
+        >
         {
           //#region Bottom View
           <View style={styles.bottomContainer}>

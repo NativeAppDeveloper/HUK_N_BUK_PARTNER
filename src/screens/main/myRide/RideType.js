@@ -68,7 +68,7 @@ const RideType = ({route}) => {
           data={[1, 1, 1, 1, 1, 1]}
           renderItem={() => (
             <TouchableOpacity
-            onPress={()=>navigate('RdieDetails')}
+            onPress={()=>navigate('RdieDetails',{rideStatus:tabData[activeTab].name})}
              style={styles.itemContainer}>
               <View style={styles.bookingIdContainer}>
                 <Text
