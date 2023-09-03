@@ -33,6 +33,7 @@ import RideCancelModal from '../../../component/modal/RideCancelModal';
 
 export default function RideStatus() {
   const navigation = useNavigation();
+  
   const [activeTab, setActiveTab] = useState(0);
   const [offerModal, SetOfferModal] = useState(false);
   const [slectedIndex, setSetlectedIndex] = useState(0);

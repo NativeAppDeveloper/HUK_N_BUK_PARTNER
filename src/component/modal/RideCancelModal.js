@@ -7,11 +7,12 @@ import { icon } from '../../utils/Image'
 import { moderateScale, scale } from 'react-native-size-matters'
 import Text14 from '../customText/Text14'
 import Button from '../customButton/Button'
+import CancelModal from './CancelModal'
 
 const RideCancelModal = ({cancel,setCancelRide}) => {
     const [active,setActive]=useState(null)
-
-  return (
+    const [cancelStatus,setCancelStatus]=useState(false)
+    return (
     <Modal 
     visible={cancel}
 
@@ -51,9 +52,11 @@ const RideCancelModal = ({cancel,setCancelRide}) => {
                   </View>
                 }
 
-                <Button onPress={()=>setCancelRide(false)} mt={10} width={'100%'} text={'Cancel Ride'}/>
+                <Button onPress={()=>setCancelStatus(true)} mt={10} width={'100%'} text={'Cancel Ride'}/>
             </View>
         </View>
+        <CancelModal cancelStatus={cancelStatus} setCancelRide={setCancelRide} setCancelStatus={setCancelStatus}/>
+
       </Modal> 
   )
 }

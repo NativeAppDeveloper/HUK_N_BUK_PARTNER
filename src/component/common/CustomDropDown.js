@@ -2,7 +2,7 @@ import { View, Text ,StyleSheet, TextInput,Image, Platform} from 'react-native';
 import React, { useState,useContext } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import { moderateScale } from 'react-native-size-matters';
-import { colors } from '../../utils/Styles';
+import { colors, fonts } from '../../utils/Styles';
 // import { colorConstants } from '../utils/constants';
 // import { scaleToDeviceHeight } from '../utils/responsive';
 const CustomDropDown = (props) => {
@@ -25,8 +25,10 @@ const CustomDropDown = (props) => {
               dropdownPosition="bottom"
               disable={props.disable}
               selectedTextStyle={{
-                // color:.black,
-                marginLeft:10
+                color:colors.black,
+                marginLeft:10,
+                fontSize:moderateScale(12),
+                fontFamily:fonts.medium
               }}
               value={props.value}
               containerStyle={{
@@ -48,9 +50,10 @@ const CustomDropDown = (props) => {
                 marginTop:props.marginTop ? props.marginTop:15,
                 marginBottom:props.marginBottom,
                 marginVertical:props.marginVertical,
-                fontFamily:'PlusJakartaSans-Medium'
+                fontFamily:'PlusJakartaSans-Medium',
                 // color:colorConstants.black,
-                // backgroundColor:colorConstants.white
+                backgroundColor:colors.white,
+                color:colors.black
               }}
               iconStyle={{
                 //   tintColor: colorConstants.black,
@@ -61,13 +64,13 @@ const CustomDropDown = (props) => {
               placeholder={props.placeholder ? props.placeholder :"--Select --"}
               placeholderStyle={{ 
                   fontSize:14, 
-            
+                  color:colors.secondry,
                    marginLeft:10
                 }}
                 itemTextStyle={{
                     fontSize:14,
-                    color:'#727272',
-                    fontFamily:'PlusJakartaSans-Medium'
+                    color:colors.black,
+                    fontFamily:fonts.medium
                 }}
                
           />

@@ -22,9 +22,9 @@ const CustomCarousel = () => {
     const data = [
         {
             id: 1,
-            text: 'Request Ride',
+            text: 'Track your Driver all the way',
             img: images.On1,
-            desc: 'Request a ride get picked up by a nearby community driver'
+            desc: 'Track your delivery or chat with your driver'
         },
         {
             id: 2,
@@ -71,14 +71,16 @@ const CustomCarousel = () => {
                                 <Text24
                                     mt={moderateScale(20)}
                                     text={item.text}
-                                    fontFamily={fonts.bold}
+                                    fontFamily={fonts.semibold}
                                     textAlign={'center'}
+                                    colors={colors.theme}
                                 />
                                 <Text14
                                     mt={moderateScale(10)}
                                     text={item.desc}
                                     fontFamily={fonts.regular}
                                     textAlign={'center'}
+                                    colors={colors.gray}
 
                                 />
                             </View>
@@ -104,9 +106,9 @@ const CustomCarousel = () => {
                 position: 'absolute',
                 bottom: moderateScale(35)
             }}>
-                <Button onPress={()=>btnHandler()} />
+                <Button text={'Login'} onPress={()=>btnHandler()} />
                 <View style={{ flexDirection: 'row', alignSelf: "center", marginTop: moderateScale(15) }}>
-                    <Text14 text={'New user ? '} />
+                    <Text14 fontFamily={fonts.regular} colors={colors.secondry} text={'New user ? '} />
                     <Text14 text={' Register here'} />
 
                 </View>

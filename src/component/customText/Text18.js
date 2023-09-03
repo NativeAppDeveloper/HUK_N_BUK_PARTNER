@@ -8,7 +8,7 @@ const Text18=(props)=> {
   return (
     <Text
       style={{
-        fontSize: moderateScale(17),
+        fontSize: moderateScale(18),
         lineHeight: lineHeight ? lineHeight :moderateScale(20),
         fontFamily: fontFamily ? fontFamily : fonts.medium,
         color: color ? color : colors.black,

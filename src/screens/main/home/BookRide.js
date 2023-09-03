@@ -27,6 +27,7 @@ import {
 } from 'react-native-heroicons/solid';
 import Button from '../../../component/customButton/Button';
 import Text16 from '../../../component/customText/Text16';
+import { homeFlow } from '../../../utils/localVariable';
 
 export default function BookRide() {
     const navigation = useNavigation();
@@ -204,10 +205,17 @@ export default function BookRide() {
                     </View>
                 </ScrollView>
                 <Button 
-                onPress={()=>navigation.navigate('ConfirmRide')}
+                onPress={()=>{
+                    if(homeFlow?.flow==2){
+                        navigation.navigate('SelectPassenger')
+                    }
+                    else{
+                        navigation.navigate('ConfirmRide')}
+                    }
+                }
                 text={'Book Ride'} />
             </View>
-
+                {alert(JSON.stringify(homeFlow))}
             <AddPromoCode offerModal={offerModal} SetOfferModal={SetOfferModal} />
         </View>
     );

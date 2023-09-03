@@ -10,6 +10,7 @@ import Step3 from '../screens/auth/signup/Step3';
 import Step4 from '../screens/auth/signup/Step4';
 import Step5 from '../screens/auth/signup/Step5';
 import RegistrationComplete from '../screens/auth/signup/RegistrationComplete';
+import BussinessDetails from '../screens/auth/signup/BussinessDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,8 @@ const AuthRoutes = () => {
             <Stack.Screen name="Step4" component={Step4} />
             <Stack.Screen name="Step5" component={Step5} />
             <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} />
+            <Stack.Screen name="BussinessDetails" component={BussinessDetails} />
+
         </Stack.Navigator>
     )
 }

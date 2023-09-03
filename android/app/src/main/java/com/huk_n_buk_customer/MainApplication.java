@@ -1,4 +1,4 @@
-package com.huk_n_buk_customer;
+package com.huk_n_buk_partner;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

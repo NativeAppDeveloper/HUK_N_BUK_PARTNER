@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
-import { colors } from '../../utils/Styles'
+import { colors, fonts } from '../../utils/Styles'
 import { moderateScale, scale } from 'react-native-size-matters'
 
 export default function Input({
@@ -19,11 +19,11 @@ export default function Input({
         paddingVertical:moderateScale(14)
         }
       }),
-      
-      
-
+      borderWidth:1,
+      borderColor:colors.borderC,
+      paddingVertical:moderateScale(5)
     }}>
-      <TextInput placeholder={placeHolder} />
+      <TextInput style={{fontFamily:fonts.medium}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
     </View>
   )
 }

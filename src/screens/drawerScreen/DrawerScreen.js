@@ -9,29 +9,46 @@ import { moderateScale, scale } from 'react-native-size-matters'
 import Text14 from '../../component/customText/Text14'
 import Text18 from '../../component/customText/Text18'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
 
 
 const DrawerScreen = (props) => {
     // const navigation=useNavigation()
     const { width, height } = useWindowDimensions('screen')
+    const dispatch=useDispatch()
+
     const drawerData = {
         first: [
             {
-                name: 'MyProfile',
-                title: 'My Profile'
+                name:'OverView',
+                title:'OverView'
             },
+
+            // {
+            //     name: 'MyProfile',
+            //     title: 'My Profile'
+            // },
             {
-                name: 'Notification',
-                title: 'Notification'
+                name: 'DriverList',
+                title: 'Driver'
             },
             {
                 name: 'MyRide',
                 title: 'My Rides'
             },
             {
-                name: 'Notification',
-                title: 'Wallet'
+                name: 'PreBids',
+                title: 'Pre bids'
             },
+            {
+                name: 'BankAccount',
+                title: 'Bank account '
+            },
+            // 1. Pre bids
+            // {
+            //     name: 'Notification',
+            //     title: 'Wallet'
+            // },
         ],
         second: [
             {
@@ -42,10 +59,10 @@ const DrawerScreen = (props) => {
                 name: 'HelpAndSupport',
                 title: 'Help & Support'
             },
-            {
-                name: 'AboutApp',
-                title: 'Refund Policy'
-            },
+            // {
+            //     name: 'AboutApp',
+            //     title: 'Refund Policy'
+            // },
     
         ],
 
@@ -62,10 +79,10 @@ const DrawerScreen = (props) => {
                 name: 'AboutApp',
                 title: 'Privacy Policy'
             },
-            {
-                name: 'Faq',
-                title: 'FAQ’s'
-            },
+            // {
+            //     name: 'Faq',
+            //     title: 'FAQ’s'
+            // },
         ],
 
     }
@@ -108,6 +125,7 @@ const DrawerScreen = (props) => {
                                                             borderBottomWidth: index === drawerData[item].length - 1 ? 0 : 0.5,
                                                             padding: moderateScale(10),
                                                             borderColor: colors.placeholderColor,
+                                                            paddingHorizontal:scale(15)
                                                         }}
                                                         key={index}>
                                                         <Text14 color={colors.theme} text={data.title} fontFamily={fonts.regular} />
@@ -125,9 +143,22 @@ const DrawerScreen = (props) => {
 
 
 
-
+                <View>
+                <TouchableOpacity 
+                onPress={()=>{
+                    dispatch({
+                        type:'CHANGE_STACK',
+                        payload:'AUTH'
+                    })
+                }}
+                style={{borderTopWidth:2,paddingTop:10,width:'90%',alignSelf:'center',alignItems:'center',borderColor:colors.borderC,marginTop:moderateScale(10),marginBottom:moderateScale(40)}}>
+                    <Text14 color={colors.theme} text={'Logout'}/>
+                </TouchableOpacity>
+            </View>
 
             </DrawerContentScrollView>
+
+            
         </ImageBackground>
 
     )

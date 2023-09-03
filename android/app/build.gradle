@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.huk_n_buk_customer"
+    namespace "com.huk_n_buk_partner"
     defaultConfig {
-        applicationId "com.huk_n_buk_customer"
+        applicationId "com.huk_n_buk_partner"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -13,15 +13,25 @@ export const colors={
     orange:'#F7954A',
     bg:'#f6f6f6',
     secondry:'#8E92A8',
-    borderC:'#E4E9F2'
+    borderC:'#E4E9F2',
+    blue:'#70A6E8',
+    orange:'#F7954A',
+    lightGreen:'#E8FFEE',
+    darkGray:'#D9D9D9'
 }
 
 export const fonts={
+    // 800
     bold:'Inter-Bold',
+    // 700
     extraBold:'Inter-ExtraBold',
+    // 600
     semibold:'Inter-SemiBold',
+
     medium:'Inter-Medium',
+    // 400
     regular:'Inter-Regular',
+    // 300
     light:'Inter-Light',
     extraLight:'Inter-ExtraLigh',
     thin:'Inter-Thin',
