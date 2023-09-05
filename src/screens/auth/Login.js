@@ -17,7 +17,6 @@ import {
   scale,
 } from 'react-native-size-matters';
 import {CommonStyle, colors, fonts} from '../../utils/Styles';
-import Text22 from '../../component/customText/Text22';
 import Text14 from '../../component/customText/Text14';
 import Input from '../../component/customInput/Input';
 import Button from '../../component/customButton/Button';
