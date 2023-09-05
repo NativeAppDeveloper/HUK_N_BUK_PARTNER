@@ -42,6 +42,7 @@ const VerifyOtp = props => {
   // timer start
   useEffect(() => {
     if (isFocused) {
+      
       let interval = null;
       if (isTimerRunning) {
         interval = setInterval(() => {

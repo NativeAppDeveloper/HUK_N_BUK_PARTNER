@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CommonStyle, colors, fonts} from '../../../utils/Styles';
@@ -39,6 +40,7 @@ const RideType = ({route}) => {
   ]);
 
 
+  // Alert.alert('dfgkjdfhg')
   console.log(rideType,'[popopopo');
 
   return (

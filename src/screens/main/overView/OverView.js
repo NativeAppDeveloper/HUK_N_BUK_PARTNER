@@ -15,19 +15,19 @@ const OverView = () => {
   const [seletedIndex, setSelectedIndex] = useState(0);
   const dummyData = [
     {
-      name: `Total Vehicles`,
+      name: `Total     Vehicles`,
       count: '140',
       color: '#FFEADA',
       colorText: '#F7954A',
     },
     {
-      name: `Total Rides`,
+      name: `Total       Rides`,
       count: '140',
       color: '#DDF9E4',
       colorText: '#23A949',
     },
     {
-      name: `Total Drivers`,
+      name: `Total      Drivers`,
       count: '140',
       color: '#70A6E8',
       colorText: '#E4F0FF',
@@ -62,6 +62,8 @@ const OverView = () => {
           {['Today', 'This Week', 'Custom Date'].map((ele, ind) => {
             return (
               <TouchableOpacity
+              onPress={()=>setSelectedIndex(ind)}
+
                 style={{
                   width: '32%',
                   backgroundColor:
@@ -141,7 +143,7 @@ const OverView = () => {
             }}>
             <View>
               <Text14
-                text={'Total Earnings'}
+                text={'Your Earnings'}
                 color={colors.placeholderColor}
                 fontFamily={fonts.regular}
               />
@@ -153,6 +155,7 @@ const OverView = () => {
 
               <View style={{marginTop: moderateScale(10)}}>
                 <Image
+                resizeMode='contain'
                   style={{width: '100%', height: moderateScale(100)}}
                   source={require('../../../assets/bg.png')}
                 />

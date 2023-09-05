@@ -27,7 +27,7 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import Button from '../../../component/customButton/Button';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RideCancelModal from '../../../component/modal/RideCancelModal';
-import { PlusIcon } from 'react-native-heroicons/solid';
+import { PlusIcon, StarIcon } from 'react-native-heroicons/solid';
 import { AirbnbRating } from 'react-native-ratings';
 import CancelModal from '../../../component/modal/CancelModal';
 
@@ -99,7 +99,7 @@ const RdieDetails = ({ route }) => {
           <View style={{ width: '100%', alignItems: 'center' }}>
             <Text18 color={colors.theme} text={'Ride Details'} />
             <Text
-              style={{ fontSize: 10, marginTop: 10, fontFamily: fonts.regular }}>
+              style={{ fontSize: 10, marginTop: 10, fontFamily: fonts.regular,color:colors.secondry }}>
               Tue, 23 Feb 2020 12:00PM • ID: 2130812309 • Round Trip
             </Text>
           </View>
@@ -161,22 +161,29 @@ const RdieDetails = ({ route }) => {
                   <Image
                     resizeMode="contain"
                     style={CommonStyle.img}
-                    source={icon.car1}
+                    source={icon.profile}
                   />
                 </View>
 
-                <View style={{ marginLeft: moderateScale(10) }}>
+                <View style={{ marginLeft: moderateScale(10),flexDirection:'row',justifyContent:'space-between',width:"80%" }}>
+                  <View>
                   <Text14
                     color={colors.theme}
                     mt={1}
                     fontFamily={fonts.bold}
-                    text={'Wagon R'}
+                    text={'Askit'}
                   />
                   <Text12
                     fontFamily={fonts.regular}
                     color={colors.gray}
-                    text={'UP16-BV-0000'}
+                    text={'UP16-BV-0000 • Sedan'}
                   />
+                  </View>
+
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <StarIcon color={colors.yellow} size={moderateScale(10)}/>
+                    <Text12 text={'4.5'} color={colors.secondry}/>
+                  </View>
                 </View>
               </View>
 
@@ -321,11 +328,10 @@ const RdieDetails = ({ route }) => {
                         mt={1}
                         text={'Akshit'}
                       />
-                      <Text12
-                        fontFamily={fonts.regular}
-                        color={colors.gray}
-                        text={'4.5'}
-                      />
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <StarIcon color={colors.yellow} size={moderateScale(10)}/>
+                    <Text12 text={'4.5'} color={colors.secondry}/>
+                  </View>
                     </View>
 
                     <View
@@ -342,14 +348,18 @@ const RdieDetails = ({ route }) => {
                         text={'₹ 150.00'}
                         mt={1}
                       />
+
+                      <View style={{flexDirection:'row',marginTop:5}}>
+                      <Image  resizeMode='contain' style={{height:moderateScale(10),width:moderateScale(10)}} source={icon.master}/>
                       <Text12
                         color={colors.theme}
                         git
                         mt={1}
                         fontFamily={fonts.regular}
                         textAlign={'right'}
-                        text={'8268'}
+                        text={' 8268'}
                       />
+                      </View>
                     </View>
                   </View>
                   //#endregion
@@ -438,7 +448,7 @@ const RdieDetails = ({ route }) => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         marginTop: moderateScale(10),
-                        borderBottomWidth: 0.5,
+                        // borderBottomWidth: 0.5,
                         borderColor: colors.placeholderColor,
                         paddingBottom: moderateScale(10),
                         borderTopWidth: 0.5,
@@ -448,7 +458,7 @@ const RdieDetails = ({ route }) => {
                         <Text12
                           color={colors.theme}
                           fontFamily={fonts.bold}
-                          text={'Odometer Drop Point'}
+                          text={'Odometer Pickup Point'}
                         />
                         <View
                           style={{
@@ -468,7 +478,7 @@ const RdieDetails = ({ route }) => {
                       <Text12
                         color={colors.theme}
                         fontFamily={fonts.bold}
-                        text={'Odometer Pickup Point'}
+                        text={'Odometer Drop Point'}
                       />
                     </View>
                   )
@@ -630,7 +640,7 @@ const RdieDetails = ({ route }) => {
                         />
                       </View>
 
-                      <View
+                      {/* <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
@@ -638,13 +648,13 @@ const RdieDetails = ({ route }) => {
                         }}>
                         <Text12 color={colors.theme} text={rideStatus=="Completed"?'Total Fare':'Partial Payment'} />
                         <Text12 color={colors.theme} text={rideStatus=="Completed"?'7000':'Partial Payment'} />
-                      </View>
+                      </View> */}
                     </View>
                   )
                   //#endregion
                 }
               </View>
-              {(rideStatus == 'Upcoming' || rideStatus == 'Ongoing') && (
+              {false&&(rideStatus == 'Upcoming' || rideStatus == 'Ongoing') && (
                 <View style={{ marginVertical: moderateScale(15) }}>
                   <Button width={'95%'} text={'Pay ₹5125'} />
                 </View>

@@ -12,6 +12,8 @@ import { rideType } from '../../../utils/localVariable';
 
 const MyRide = () => {
     const {navigate}=useNavigation()
+
+    // alert('sgshssgh')
   const [notifactionData, setNotifactionData] = useState([
     {
       img: icon.img2,

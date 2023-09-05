@@ -14,7 +14,7 @@ import {CommonStyle, colors, fonts} from '../../../utils/Styles';
 import {icon, images} from '../../../utils/Image';
 import {width} from '../../../utils/Helper';
 import {TextInput} from 'react-native-gesture-handler';
-import {MagnifyingGlassIcon, MapPinIcon} from 'react-native-heroicons/solid';
+import {BellIcon, MagnifyingGlassIcon, MapPinIcon} from 'react-native-heroicons/solid';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export default function Home() {
             backgroundColor: colors.theme,
             elevation: 5,
             paddingHorizontal:moderateScale(15),
-            paddingVertical:moderateScale(10)
+            paddingVertical:moderateScale(15)
           }}>
           {Platform.OS == 'android' && <SafeAreaView />}
 
@@ -60,8 +60,9 @@ export default function Home() {
             </View>
 
 
-            <TouchableOpacity style={{position:'absolute',right:0}}>
-              <Image source={icon.bell} style={{tintColor:colors.white,alignSelf:'flex-end',height:moderateScale(30),width:moderateScale(30)}}/>
+            <TouchableOpacity style={{position:'absolute',right:0,top:15}}>
+              <BellIcon color={colors.white}/>
+              {/* <Image source={icon.bell} style={{tintColor:colors.white,alignSelf:'flex-end',height:moderateScale(25),width:moderateScale(25)}}/> */}
             </TouchableOpacity>
           </View>
 

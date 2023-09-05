@@ -21,9 +21,9 @@ export default function Input({
       }),
       borderWidth:1,
       borderColor:colors.borderC,
-      paddingVertical:moderateScale(5)
+      // paddingVertical:moderateScale(5)
     }}>
-      <TextInput style={{fontFamily:fonts.medium}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
+      <TextInput style={{fontFamily:fonts.medium,color:colors.black}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
     </View>
   )
 }

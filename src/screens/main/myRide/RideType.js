@@ -18,6 +18,7 @@ import Text14 from '../../../component/customText/Text14';
 import Text12 from '../../../component/customText/Text12';
 import {useNavigation} from '@react-navigation/native';
 import { StarIcon } from 'react-native-heroicons/solid';
+import Text10 from '../../../component/customText/Text10';
 
 const RideType = ({route}) => {
   const rideType = route?.params?.rideType;
@@ -67,9 +68,10 @@ const RideType = ({route}) => {
 
       <View style={styles.listContainer}>
         <FlatList
+          contentContainerStyle={{paddingBottom:moderateScale(200)}}
           showsVerticalScrollIndicator={false}
-          data={[1, 1, 1, 1, 1, 1]}
-          renderItem={() => (
+          data={[1, 1]}
+          renderItem={(item,ind) => (
             <TouchableOpacity
               onPress={()=>{
                   if(rideType=='Intercity'){
@@ -93,16 +95,58 @@ const RideType = ({route}) => {
                 <Text
                   style={
                     styles.bookingIdText
-                  }>{`Booking ID #41651651561 • One Way`}</Text>
+                  }>{`Booking ID #41651651561 `}
+                  </Text>
 
 
-                  <View style={{flexDirection:'row'}}>
-                    <Image style={{height:moderateScale(20),width:moderateScale(20)}} source={icon.timer1}/>
-                    <Text12 text={' 3 Hour / 30km'}
-                    color={colors.gray}
-                    fontSize={10}
-                    />
-                  </View>
+                 {rideType=="Outstation" &&
+                   <View style={{flexDirection: 'row'}}>
+                   <View
+                     style={{
+                       flexDirection: 'row',
+                       alignItems: 'center',
+                       marginRight: moderateScale(10),
+                     }}>
+                     <Image
+                       resizeMode="contain"
+                       style={{
+                         height: moderateScale(15),
+                         width: moderateScale(15),
+                         marginRight: moderateScale(5),
+                       }}
+                       source={icon.child}
+                     />
+                     <Text12
+                       mt={1}
+                       text={'2'}
+                       color={colors.gray}
+                       fontFamily={fonts.regular}
+                     />
+                   </View>
+   
+                   <View
+                     style={{
+                       flexDirection: 'row',
+                       alignItems: 'center',
+                     }}>
+                     <Image
+                       resizeMode="contain"
+                       style={{
+                         height: moderateScale(15),
+                         width: moderateScale(15),
+                         marginRight: moderateScale(5),
+                       }}
+                       source={icon.adult}
+                     />
+                     <Text12
+                       mt={1}
+                       text={'2'}
+                       color={colors.gray}
+                       fontFamily={fonts.regular}
+                     />
+                   </View>
+                 </View>
+                  }
               </View>
 
               {
@@ -156,7 +200,7 @@ const RideType = ({route}) => {
                         style={{height: 17, width: 17}}
                         source={icon.Time}
                       />
-                      <Text style={{fontSize: 10, fontFamily: fonts.regular}}>
+                      <Text style={{fontSize: 10, fontFamily: fonts.regular,color:colors.secondry}}>
                         {' '}
                         4h50m
                       </Text>
@@ -215,13 +259,13 @@ const RideType = ({route}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <View style={{height: 40, width: 40}}>
+                 { <View style={{height: 40, width: 40}}>
                     <Image
                       source={icon.profile}
                       resizeMode="contain"
                       style={CommonStyle.img}
                     />
-                  </View>
+                  </View>}
 
                   <View style={{marginLeft: 15}}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -251,6 +295,7 @@ const RideType = ({route}) => {
                       right: 8,
                       top: 10,
                     }}>
+                     {(activeTab==0||activeTab==1)&& <>
                     <Text12 color={colors.theme} mt={1} text={'Total Amount'} />
                     <Text12
                       textAlign={'right'}
@@ -258,6 +303,38 @@ const RideType = ({route}) => {
                       color={colors.black}
                       text={'₹ 7,325'}
                     />
+                    </>}
+
+                    {activeTab==2&& <>
+                    {/* <Text12 color={colors.theme} mt={1} text={'Total Amount'} /> */}
+                    <Text12
+                      textAlign={'right'}
+                      fontFamily={fonts.medium}
+                      color={colors.black}
+                      text={'₹ 150'}
+                      />
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                      <Image resizeMode='contain' style={{height:moderateScale(10),width:10}} source={ind==0?icon.master:icon.cash}/>
+                      <Text10 fontFamily={fonts.regular} text={' 1200'}/>
+                      </View>
+                    </>}
+
+                    {activeTab==3&& <>
+                    {/* <Text12 color={colors.theme} mt={1} text={'Total Amount'} /> */}
+                    <Text12
+                      textAlign={'right'}
+                      fontFamily={fonts.medium}
+                      color={colors.black}
+                      text={'₹ 150'}
+                      />
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                      <Image resizeMode='contain' style={{height:moderateScale(10),width:10}} source={ind==0?icon.master:icon.cash}/>
+                      <Text10 fontFamily={fonts.regular} text={' 1200'}/>
+                      </View>
+                    </>}
+
+
+
                   </View>
                 </View>
                 //#endregion

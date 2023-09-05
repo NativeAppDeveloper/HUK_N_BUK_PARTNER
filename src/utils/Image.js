@@ -25,6 +25,8 @@ import Hindi from '../assets/icon/Hindi.png';
 import Eng from '../assets/icon/Eng.png';
 import toggleBtn from '../assets/icon/toggleBtn.png';
 import master from '../assets/icon/master.png';
+import cash from '../assets/icon/cash.png';
+
 
 import paytm from '../assets/icon/paytm.png';
 import PhonePe from '../assets/icon/PhonePe.png';
@@ -187,5 +189,6 @@ export const icon = {
   Bank: Bank,
   on:on,
   off:off,
-  carIcon:carIcon
+  carIcon:carIcon,
+  cash:cash
 };

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StatusBar,
   TextInput,
+  Platform,
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -32,9 +33,13 @@ const Login = ({route}) => {
   const navigation = useNavigation();
   const paramData = route?.params?.flow;
   return (
-    <KeyboardAwareScrollView contentContainerStyle={{width: '100%', flex: 1}}>
+    <>
+    <SafeAreaView  style={{
+      backgroundColor:colors.theme
+    }}/>
+        <KeyboardAwareScrollView contentContainerStyle={{width: '100%', flex: 1,}}>
       <StatusBar backgroundColor={colors.theme} barStyle={'light-content'} />
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View
           style={{
             width: '100%',
@@ -45,7 +50,7 @@ const Login = ({route}) => {
             style={{
               backgroundColor: colors.theme,
               paddingHorizontal: commonPadding,
-              paddingVertical: moderateScale(35),
+              paddingVertical: moderateScale(15),
             }}>
             {paramData == 'Signup' && (
               <TouchableOpacity>
@@ -109,6 +114,7 @@ const Login = ({route}) => {
                     fontFamily: fonts.medium,
                     color: colors.black,
                     width: '90%',
+                    paddingVertical:Platform.OS=='ios'?moderateScale(14):moderateScale(5)
                   }}
                 />
               </View>
@@ -134,7 +140,7 @@ const Login = ({route}) => {
                   }}>
                   Terms & Conditions{' '}
                   <Text14 color={colors.gray} text={' and '} />
-                  and Privacy and Polcies
+                   Privacy and Polcies
                 </Text>
               </View>
             </View>
@@ -144,7 +150,7 @@ const Login = ({route}) => {
           
         </View>
        
-      </SafeAreaView>
+      </View>
 
       <View
           style={{
@@ -167,6 +173,8 @@ const Login = ({route}) => {
           </TouchableOpacity>
         </View>
     </KeyboardAwareScrollView>
+    </>
+
   );
 };
 

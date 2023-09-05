@@ -25,9 +25,13 @@ import {
   View,
 } from 'react-native';
 import Text10 from '../../../component/customText/Text10';
+import { commonPadding } from '../../../utils/Helper';
 
-const MyBidRideDetails = () => {
+const MyBidRideDetails = ({route}) => {
   const navigation = useNavigation();
+  const paramData=route?.params?.name
+
+  console.log(paramData);
   return (
     <>
       <StatusBar backgroundColor={colors.theme} />
@@ -92,7 +96,7 @@ const MyBidRideDetails = () => {
                       color={colors.white}
                       lineHeight={0}
                       mt={moderateScale(1)}
-                      text={'Round Trip'}
+                      text={paramData}
                       textAlign={'center'}
                     />
                   </View>
@@ -101,12 +105,15 @@ const MyBidRideDetails = () => {
                     style={{
                       paddingHorizontal: 4,
                       paddingVertical: 2,
+                      flexDirection:"row",
+                      alignItems:'center'
                     }}>
+                      <Text style={{height:5,width:5,backgroundColor:colors.green,borderRadius:5}}></Text>
                     <Text14
                       color={'#23A949'}
                       lineHeight={0}
                       mt={moderateScale(1)}
-                      text={'Active '}
+                      text={'  Active '}
                       //   textAlign={'center'}
                     />
                   </TouchableOpacity>
@@ -123,12 +130,17 @@ const MyBidRideDetails = () => {
                     alignItems: 'center',
                     backgroundColor: colors.white,
                     paddingVertical: moderateScale(10),
+                    justifyContent:'space-between'
                   }}>
+
+                    <View style={{flexDirection:'row'}}>
                   <View style={styles.imageNameInner}>
-                    <Image style={[CommonStyle.img]} source={icon.Car} />
+                    <Image resizeMode='contain' style={[CommonStyle.img]} source={icon.Car} />
                   </View>
 
-                  <View>
+                  <View style={{flexDirection:'row',}}>
+
+                    <View>
                     <Text12 color={colors.secondry} text={'Cab Type'} />
 
                     <View
@@ -137,7 +149,49 @@ const MyBidRideDetails = () => {
                       }}>
                       <Text14 mt={1} color={colors.theme} text={'Sedan'} />
                     </View>
+                    </View>
+
                   </View>
+                  </View>
+
+
+
+                  <View
+                        style={{
+                          flexDirection: 'row-reverse',
+                          alignItems: 'center',
+                        }}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Image
+                            resizeMode="contain"
+                            style={{
+                              height: moderateScale(15),
+                              width: moderateScale(15),
+                            }}
+                            source={icon.adult}
+                          />
+                          <Text12 color={colors.secondry} mt={1} text={' 2'} />
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginRight: 10,
+                          }}>
+                          <Image
+                            resizeMode="contain"
+                            style={{
+                              height: moderateScale(15),
+                              width: moderateScale(15),
+                            }}
+                            source={icon.child}
+                          />
+                          <Text12 color={colors.secondry} mt={1} text={' 2'} />
+                        </View>
+                        {/* <Image resizeMode='contain' style={{height:moderateScale(15),width:moderateScale(15),marginLeft:moderateScale(10)}} source={icon.child}/> */}
+                      </View>
 
                   <View
                     style={{
@@ -272,8 +326,13 @@ const MyBidRideDetails = () => {
                         styles.bookingIdText
                       }>{`Tue, 23 Feb, 6:00 PM`}</Text>
                   </View> */}
-
-                  <Text10 color={colors.secondry} text={'     Tue, 23 Feb, 6:00 PM'}/>
+                  <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:commonPadding}}>
+                  <Text10 color={colors.secondry} text={'Tue, 23 Feb 2020'}/>
+                  <View style={{flexDirection:'row'}}>
+                    <Image style={{tintColor:colors.secondry,height:15,width:15}} source={icon.distance}/>
+                    <Text10 mt={1} color={colors.secondry} text={'  Total: 1230 Km'}/>
+                  </View>
+                  </View>
 
                   {
                     //#region
@@ -479,7 +538,9 @@ const MyBidRideDetails = () => {
               style={{
                 position: 'absolute',
                 width: '100%',
-                bottom: moderateVerticalScale(20),
+                bottom: moderateVerticalScale(0),
+                backgroundColor:colors.theme,
+                paddingVertical:moderateScale(20)
               }}>
               <Button
                 onPress={() => navigation.navigate('AssignVechicle')}
@@ -513,7 +574,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginTop: moderateScale(20),
-    paddingVertical: moderateScale(20),
+    paddingVertical: moderateScale(10),
     backgroundColor: colors.white,
   },
   bookingIdContainer: {

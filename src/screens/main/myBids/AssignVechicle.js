@@ -29,7 +29,7 @@ import Button from '../../../component/customButton/Button';
 const AssignVechicle = () => {
   const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
-
+  const [activeIndex,setActiveIndex]=useState(null)
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   };
@@ -42,7 +42,9 @@ const AssignVechicle = () => {
       <ScrollView contentContainerStyle={{paddingBottom: moderateScale(100)}}>
         {[1, 1, 1, 1].map((ele, ind) => {
           return (
-            <View style={styles.vehicleContainer}>
+            <TouchableOpacity 
+            onPress={()=>setActiveIndex(ind)}
+            style={[styles.vehicleContainer,{borderColor:activeIndex==ind?colors.yellow:colors.borderC,overflow:'hidden'}]}>
               <View style={styles.vehicleInfo}>
                 <View style={styles.vehicleImageContainer}>
                   <View style={styles.vehicleImage}>
@@ -185,7 +187,7 @@ const AssignVechicle = () => {
                   </TouchableOpacity>
                 </View>
               )}
-            </View>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>

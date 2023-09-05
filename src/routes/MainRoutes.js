@@ -66,6 +66,7 @@ import PreBid_Details from '../screens/main/preBids/PreBid_Details';
 import MyBidRideDetails from '../screens/main/myBids/MyBidRideDetails';
 import AssignVechicle from '../screens/main/myBids/AssignVechicle';
 import AssignVechicleInformation from '../screens/main/myBids/AssignVechicleInformation';
+import RoundTripDetails from '../screens/main/myBids/RoundTripDetails';
 // import MyBids from '../screens/main/myBids/MyBids';
 
 const Drawer = createDrawerNavigator();
@@ -296,6 +297,7 @@ const MainRoutes = () => {
 
         <Stack.Screen name="AssignVechicle" component={AssignVechicle} />
         <Stack.Screen name="AssignVechicleInformation" component={AssignVechicleInformation} />
+        <Stack.Screen name="RoundTripDetails" component={RoundTripDetails} />
 
         
         

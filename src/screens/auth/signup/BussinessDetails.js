@@ -52,11 +52,23 @@ const BussinessDetails = () => {
                   mt={moderateVerticalScale(20)}
                 />
 
+              <View style={{}}>
                 <Input
                   placeHolder={'Location'}
                   mt={moderateVerticalScale(20)}
                 />
+                <Image style={{
+                  tintColor:colors.black,
+                  height:moderateScale(20)
+                  ,width:moderateScale(20),
+                  position:'absolute',
+                  alignSelf:'flex-end',
+                  right:moderateScale(10),
+                  top:moderateScale(40)
+                  }} source={icon.current}/>
+                </View>
 
+              
                 <Input
                   placeHolder={'Business Address'}
                   mt={moderateVerticalScale(20)}

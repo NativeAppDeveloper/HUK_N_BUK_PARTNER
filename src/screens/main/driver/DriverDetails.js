@@ -7,7 +7,7 @@ import {
   moderateVerticalScale,
   scale,
 } from 'react-native-size-matters';
-import {icon} from '../../../utils/Image';
+import {icon, images} from '../../../utils/Image';
 import Text10 from '../../../component/customText/Text10';
 import Text12 from '../../../component/customText/Text12';
 import Text14 from '../../../component/customText/Text14';
@@ -56,7 +56,27 @@ const DriverDetails = () => {
               color={colors.gray}
               text={'Kanpur, Uttar Pradesh'}
             />
+
+
+
           </View>
+
+
+          <View style={{flexDirection: 'row',position:'absolute',right:10,top:moderateScale(15)}}>
+              <TouchableOpacity
+                style={{
+                  height: moderateScale(20),
+                  width: moderateScale(20),
+                  marginRight: moderateScale(10),
+                }}>
+                <Image style={CommonStyle.img} source={images.edit1} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{height: moderateScale(20), width: moderateScale(20)}}>
+                <Image style={CommonStyle.img} source={images.trash} />
+              </TouchableOpacity>
+            </View>
         </View>
 
         <View

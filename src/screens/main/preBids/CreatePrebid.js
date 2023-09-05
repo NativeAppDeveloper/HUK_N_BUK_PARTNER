@@ -13,11 +13,12 @@ import { commonPadding, width } from '../../../utils/Helper'
 import Text12 from '../../../component/customText/Text12'
 import Text22 from '../../../component/customText/Text22'
 import Button from '../../../component/customButton/Button'
+import Text10 from '../../../component/customText/Text10'
 
 const CreatePrebid = () => {
   const dropDownData = [
     { label: 'Car', value: 'Car' },
-    { label: 'Bike', value: 'Bike' },
+    { label: 'SUV', value: 'SUV' },
   ];
 
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -82,6 +83,7 @@ const CreatePrebid = () => {
                 <Text14 mt={moderateScale(30)} color={colors.secondry} text={'Total: 1230 Km'} />
                 <View style={styles.container2}>
                   <TextInput
+                  keyboardType='number-pad'
                     style={styles.input}
                     placeholder={"Enter Price"}
                     placeholderTextColor="gray"
@@ -116,6 +118,7 @@ const CreatePrebid = () => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
               <View style={styles.container3}>
                 <TextInput
+                 keyboardType='number-pad'
                   style={styles.input}
                   placeholder={"Min"}
                   placeholderTextColor="gray"
@@ -123,6 +126,7 @@ const CreatePrebid = () => {
               </View>
               <View style={styles.container3}>
                 <TextInput
+                 keyboardType='number-pad'
                   style={styles.input}
                   placeholder={"Max"}
                   placeholderTextColor="gray"
@@ -155,6 +159,7 @@ const CreatePrebid = () => {
 
             <View style={styles.container}>
               <TextInput
+               keyboardType='number-pad'
                 style={styles.input}
                 placeholder={"Enter Amount"}
                 placeholderTextColor="gray"
@@ -187,10 +192,12 @@ const CreatePrebid = () => {
 
             <View style={styles.container}>
               <TextInput
+               keyboardType='number-pad'
                 style={styles.input}
                 placeholder={"Charges"}
                 placeholderTextColor="gray"
               />
+              <Text10 color={colors.theme} text={'Per Night'}/>
             </View>
             <View style={{ marginTop: moderateScale(20), left: moderateScale(20) }}>
               <Text14 text={'Parking'} />
@@ -221,10 +228,13 @@ const CreatePrebid = () => {
             </View>
             <View style={styles.container}>
               <TextInput
+               keyboardType='number-pad'
                 style={styles.input}
                 placeholder={"Charges"}
                 placeholderTextColor="gray"
               />
+                            <Text10 color={colors.theme} text={'Per Km'}/>
+
             </View>
             <View>
               <View style={{ marginTop: moderateScale(20), left: moderateScale(20) }}>
@@ -232,7 +242,7 @@ const CreatePrebid = () => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: moderateScale(20), right: moderateScale(20) }}>
                   <TouchableOpacity
-                    onPress={() => setPrefrence(1)}
+                    // onPress={() => setPrefrence(1)}
                     style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ height: 22, width: 22, }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 1 ? images.unCheck: images.checkboxcheck} />
@@ -241,7 +251,7 @@ const CreatePrebid = () => {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setPrefrence(2)}
+                    // onPress={() => setPrefrence(2)}
                     style={{ flexDirection: 'row', alignItems: 'center', marginLeft: moderateScale(20) }}>
                     <View style={{ height: 22, width: 22 }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 2 ? images.unCheck: images.checkboxcheck} />
@@ -250,7 +260,7 @@ const CreatePrebid = () => {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setPrefrence(3)}
+                    // onPress={() => setPrefrence(3)}
                     style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ height: 22, width: 22, }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 3 ? images.unCheck: images.checkboxcheck} />
@@ -260,10 +270,10 @@ const CreatePrebid = () => {
 
 
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: moderateScale(20), right: moderateScale(22) }}>
+                <View style={{ flexDirection: 'row', marginTop: moderateScale(20), right: moderateScale(22),paddingHorizontal:19 }}>
 
                   <TouchableOpacity
-                    onPress={() => setPrefrence(4)}
+                    // onPress={() => setPrefrence(4)}
                     style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ height: 22, width: 22, }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 4 ? images.unCheck: images.checkboxcheck} />
@@ -271,8 +281,8 @@ const CreatePrebid = () => {
                     <Text12 color={colors.secondry} text={'   Mask'} />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => setPrefrence(5)}
-                    style={{ flexDirection: 'row', alignItems: 'center', marginLeft: moderateScale(20) }}>
+                    // onPress={() => setPrefrence(5)}
+                    style={{ flexDirection: 'row', alignItems: 'center', marginLeft: moderateScale(20),marginLeft:20 }}>
                     <View style={{ height: 22, width: 22 }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 5 ? images.unCheck: images.checkboxcheck} />
                     </View>
@@ -280,8 +290,8 @@ const CreatePrebid = () => {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => setPrefrence(6)}
-                    style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    // onPress={() => setPrefrence(6)}
+                    style={{ flexDirection: 'row', alignItems: 'center',marginLeft:20 }}>
                     <View style={{ height: 22, width: 22, }}>
                       <Image style={[CommonStyle.img, ]} source={prefrence == 6 ? images.unCheck: images.checkboxcheck} />
                     </View>
@@ -314,12 +324,15 @@ const CreatePrebid = () => {
           backgroundColor: colors.theme
         }}>
         <Button
-          //   onPress={() => navigation.navigate('Submit Pre Bid')}
+            // onPress={() => navigation.navigate('Submit Pre Bid')}
           width={'90%'}
           mt={moderateVerticalScale(20)}
           text={'Submit Pre Bid'}
         />
       </View>
+
+
+      {/* <DeleteModal */}
 
     </SafeAreaView>
   )

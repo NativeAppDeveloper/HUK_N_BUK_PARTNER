@@ -182,11 +182,11 @@ const VechicleInformation = ({route}) => {
                       <Image
                         resizeMode="contain"
                         style={{
-                          height: moderateScale(30),
-                          width: moderateScale(30),
+                          height: moderateScale(40),
+                          width: moderateScale(40),
                           marginTop: moderateScale(10),
                         }}
-                        source={require('../../../assets/icon/documenttext.png')}
+                        source={{uri:'https://etimg.etb2bimg.com/thumb/92831648.cms?width=400&height=300'}}
                       />
                     </View>
                   </View>
@@ -194,7 +194,7 @@ const VechicleInformation = ({route}) => {
               );
             })}
             {/* driver detaisl */}
-            <View
+           {!paramData&& <View
               style={{
                 paddingHorizontal: moderateScale(10),
                 backgroundColor: colors.white,
@@ -248,7 +248,7 @@ const VechicleInformation = ({route}) => {
                   <Text12 mt={1} color={colors.theme} text={'Remove Driver'} />
                 </TouchableOpacity>
               </View>
-            </View>
+            </View>}
 
             {/* assign driver */}
 

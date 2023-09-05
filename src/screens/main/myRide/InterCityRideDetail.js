@@ -31,6 +31,7 @@ import RideCancelModal from '../../../component/modal/RideCancelModal';
 import {PlusIcon, StarIcon} from 'react-native-heroicons/solid';
 import {AirbnbRating, Rating} from 'react-native-ratings';
 import CancelModal from '../../../component/modal/CancelModal';
+import Text10 from '../../../component/customText/Text10';
 
 const InterCityRideDetail = ({route}) => {
   const navigation = useNavigation();
@@ -105,8 +106,13 @@ const InterCityRideDetail = ({route}) => {
           <View style={{width: '100%', alignItems: 'center'}}>
             <Text18 color={colors.theme} text={'Ride Details'} />
             <Text
-              style={{fontSize: 10, marginTop: 10, fontFamily: fonts.regular}}>
-              Tue, 23 Feb 2020 12:00PM • ID: 2130812309 • Round Tripaå
+              style={{
+                fontSize: 10,
+                marginTop: 15,
+                fontFamily: fonts.regular,
+                color: colors.secondry,
+              }}>
+              Tue, 23 Feb 2020 12:00PM • ID: 2130812309
             </Text>
           </View>
         </View>
@@ -178,6 +184,17 @@ const InterCityRideDetail = ({route}) => {
                     text={'UP16-BV-0000 • Sedan'}
                   />
                 </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    right: moderateScale(10),
+                  }}>
+                  <StarIcon color={colors.yellow} size={moderateScale(10)} />
+                  <Text12 color={colors.secondry} text={' 2.5'} />
+                </View>
               </View>
 
               <View
@@ -208,7 +225,7 @@ const InterCityRideDetail = ({route}) => {
                           />
                         </View>
 
-                        <View style={{marginLeft:moderateScale(10)}}>
+                        <View style={{marginLeft: moderateScale(10)}}>
                           <Text14
                             color={colors.theme}
                             mt={1}
@@ -240,7 +257,12 @@ const InterCityRideDetail = ({route}) => {
                           style={{height: 17, width: 17}}
                           source={icon.Time}
                         />
-                        <Text style={{fontSize: 10, fontFamily: fonts.regular}}>
+                        <Text
+                          style={{
+                            fontSize: 10,
+                            fontFamily: fonts.regular,
+                            color: colors.secondry,
+                          }}>
                           {' '}
                           4h50m
                         </Text>
@@ -264,13 +286,10 @@ const InterCityRideDetail = ({route}) => {
                           height: moderateScale(23),
                           width: moderateScale(23),
                         }}>
-                        <Image
-                          source={icon.location}
-                          style={CommonStyle.img}
-                        />
+                        <Image source={icon.location} style={CommonStyle.img} />
                       </View>
 
-                      <View style={{marginLeft:moderateScale(10)}}>
+                      <View style={{marginLeft: moderateScale(10)}}>
                         <Text14
                           color={colors.theme}
                           mt={1}
@@ -303,95 +322,159 @@ const InterCityRideDetail = ({route}) => {
                   }}>
                   <View style={{flexDirection: 'row'}}>
                     {/* <Text style={{fontSize: 10}}>Payment Method</Text> */}
-                    <Image style={{height:moderateScale(30),width:moderateScale(30)}} source={icon.profile} />
+                    <Image
+                      style={{
+                        height: moderateScale(30),
+                        width: moderateScale(30),
+                      }}
+                      source={icon.profile}
+                    />
                     <View
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginLeft: moderateScale(10),
                       }}>
-                        <View>
-                      <Text style={{fontSize: 12,fontFamily:fonts.semibold,color:colors.theme}}>Gregory</Text>
-                        <View style={{flexDirection:'row',alignItems:'center',marginLeft:2,marginTop:4}}>
-                          <StarIcon size={moderateScale(10)} color={colors.yellow}/>
-                          <Text style={{fontSize: 10,fontFamily:fonts.semibold,color:colors.secondry}} >  4.5</Text>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            fontFamily: fonts.semibold,
+                            color: colors.theme,
+                          }}>
+                          Gregory
+                        </Text>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginLeft: 2,
+                            marginTop: 4,
+                          }}>
+                          <StarIcon
+                            size={moderateScale(10)}
+                            color={colors.yellow}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 10,
+                              fontFamily: fonts.semibold,
+                              color: colors.secondry,
+                            }}>
+                            {' '}
+                            4.5
+                          </Text>
                         </View>
-                        </View>
+                      </View>
                     </View>
                   </View>
-                    <View>
-
-                  <Text12
-                    text={'₹ 150.00'}
-                    color={colors.theme}
-                    fontFamily={fonts.bold}
-                  />
-                  <Text style={{fontSize:10,color:colors.placeholderColor,fontFamily:fonts.regular}}>
-                  <Image source={icon.master}/> 8686
-
-                  </Text>
-                    </View>
-                </View>
-                //#endregion
-              }
-
-              {rideStatus=="Completed"&&
-                //#region rate a driver
-                <View
-                  style={{
-                    paddingHorizontal: commonPadding,
-                    paddingVertical: moderateScale(15),
-                    borderBottomWidth: 1,
-                    borderColor: colors.borderC,
-                  }}>
-                  <Text14 text={'Customer Rated'} color={colors.theme} />
-
-                  <AirbnbRating
-                    size={moderateScale(18)}
-                    count={5}
-                    reviews={[]}
-                    ratingContainerStyle={{
-                      alignItems: 'flex-start',
-                      //   borderWidth:1,
-                      justifyContent: 'space-around',
-                      height: moderateScale(20),
-                      marginVertical: moderateScale(15),
-                    }}
-                    defaultRating={0}
-                    starContainerStyle={{
-                      position: 'absolute',
-                      height: moderateScale(20),
-                    }}
-                    unSelectedColor={colors.borderC}
-                  />
-
-                  <View style={{borderRadius: 8}}>
-                    <TextInput
-                      style={{
-                        borderWidth: 1,
-                        textAlignVertical: 'top',
-                        paddingHorizontal: scale(10),
-                        fontFamily:fonts.medium,
-                        borderWidth:1,
-                        borderColor:colors.borderC,
-                        borderRadius:8,
-                        height:moderateScale(80)
-                      }}
-                      placeholder="Add Comments"
+                  <View>
+                    <Text12
+                      text={'₹ 150.00'}
+                      color={colors.theme}
+                      fontFamily={fonts.bold}
                     />
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        color: colors.placeholderColor,
+                        fontFamily: fonts.regular,
+                      }}>
+                      <Image source={icon.master} /> 8686
+                    </Text>
                   </View>
                 </View>
                 //#endregion
               }
 
               {
-                //#region estimated price
+                rideStatus == 'Completed' && (
+                  //#region rate a driver
+                  <View
+                    style={{
+                      paddingHorizontal: commonPadding,
+                      paddingVertical: moderateScale(15),
+                      borderBottomWidth: 1,
+                      borderColor: colors.borderC,
+                    }}>
+                    <Text14 text={'Customer Rated'} color={colors.theme} />
+
+                    <AirbnbRating
+                      size={moderateScale(18)}
+                      count={5}
+                      reviews={[]}
+                      ratingContainerStyle={{
+                        alignItems: 'flex-start',
+                        //   borderWidth:1,
+                        justifyContent: 'space-around',
+                        height: moderateScale(20),
+                        marginVertical: moderateScale(15),
+                      }}
+                      defaultRating={5}
+                      starContainerStyle={{
+                        position: 'absolute',
+                        height: moderateScale(20),
+                      }}
+                      unSelectedColor={colors.borderC}
+                    />
+
+                    <View style={{borderRadius: 8}}>
+                      <TextInput
+                        editable={false}
+                        style={{
+                          // borderWidth: 1,
+                          textAlignVertical: 'top',
+                          paddingHorizontal: scale(10),
+                          fontFamily: fonts.regular,
+                          // borderWidth:1,
+                          borderColor: colors.borderC,
+                          borderRadius: 8,
+                          height: moderateScale(80),
+                          color: colors.secondry,
+                        }}
+                        multiline
+                        placeholder="Add Comments"
+                        value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      />
+                    </View>
+                  </View>
+                )
+                //#endregion
+              }
+
+
+              {rideStatus=="Cancelled"&&
+                //#region  for cancelation
+                <View style={{paddingHorizontal:commonPadding,paddingVertical:moderateScale(10),borderBottomWidth:1,borderColor:colors.borderC}}>
+                    <Text12 
+                    color={colors.theme}
+                    text={'Driver Cancelled This Ride'}
+                    />
+
+                    <Text10 mt={10} text={'Reason'} color={colors.secondry}/>
+                    <Text12 
+                    color={colors.theme}
+                    text={'Rider taking too much time'}
+                    />
+                </View>
+                //#endregion
+              }
+
+              {
+               //#region estimated price
                 <View
                   style={{
                     paddingHorizontal: commonPadding,
                     marginTop: moderateScale(10),
                   }}>
-                  <Text14 text={rideStatus=="Completed"?"Price Breakup":'Estimated Price'} color={colors.theme} />
+                  <Text14
+                    text={
+                      rideStatus !== 'Completed'
+                        ? 'Price Breakup'
+                        : 'Estimated Price'
+                    }
+                    color={colors.theme}
+                  />
 
                   <View
                     style={{
@@ -450,7 +533,7 @@ const InterCityRideDetail = ({route}) => {
                 //#endregion
               }
 
-              {false && rideStatus !== 'Cancelled' && (
+              {false && rideStatus !== 'Completed' && (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -483,16 +566,12 @@ const InterCityRideDetail = ({route}) => {
                       justifyContent: 'center',
                       borderRadius: 8,
                     }}>
-                    <Text14
-                      mt={1}
-                      color={colors.white}
-                      text={'Need Help'}
-                    />
+                    <Text14 mt={1} color={colors.white} text={'Need Help'} />
                   </TouchableOpacity>
                 </View>
               )}
 
-              {rideStatus == 'Cancelled' && (
+              {false && rideStatus == 'Cancelled' && (
                 <TouchableOpacity
                   style={{
                     backgroundColor: colors.theme,
@@ -503,10 +582,25 @@ const InterCityRideDetail = ({route}) => {
                     borderRadius: 8,
                     alignSelf: 'center',
                   }}>
+                  <Text14 mt={1} color={colors.white} text={'Need Help'} />
+                </TouchableOpacity>
+              )}
+
+              {rideStatus == 'Completed' && (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: colors.white,
+                    width: '90%',
+                    alignItems: 'center',
+                    height: moderateScale(45),
+                    justifyContent: 'center',
+                    borderRadius: 8,
+                    alignSelf: 'center',
+                  }}>
                   <Text14
                     mt={1}
-                    color={colors.white}
-                    text={'Need Help'}
+                    color={colors.theme}
+                    text={'Download Receipt'}
                   />
                 </TouchableOpacity>
               )}

@@ -76,7 +76,7 @@ const AssignVechicleInformation = () => {
                 <Text14
                   mt={moderateScale(30)}
                   color={colors.secondry}
-                  text={'Total: 1230 Km'}
+                  text={'  Total: 1230 Km'}
                 />
                 <View
                   style={{
@@ -90,7 +90,7 @@ const AssignVechicleInformation = () => {
                 <TextInput
                   style={styles.input}
                   placeholder={'Per Km Price'}
-                  placeholderTextColor="gray"
+                  placeholderTextColor={colors.secondry}
                 />
               </View>
             </View>
@@ -181,6 +181,7 @@ const AssignVechicleInformation = () => {
               style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={styles.container3}>
                 <TextInput
+                keyboardType='number-pad'
                   style={styles.input}
                   placeholder={'Min'}
                   placeholderTextColor="gray"
@@ -189,6 +190,8 @@ const AssignVechicleInformation = () => {
               <View style={styles.container3}>
                 <TextInput
                   style={styles.input}
+                  keyboardType='number-pad'
+
                   placeholder={'Max'}
                   placeholderTextColor="gray"
                 />
@@ -236,6 +239,7 @@ const AssignVechicleInformation = () => {
 
            {prefrence==2&& <View style={styles.container}>
               <TextInput
+              keyboardType='number-pad'
                 style={styles.input}
                 placeholder={'Enter Amount'}
                 placeholderTextColor="gray"
@@ -285,6 +289,8 @@ const AssignVechicleInformation = () => {
               <TextInput
                 style={styles.input}
                 placeholder={'Charges'}
+                keyboardType='number-pad'
+
                 placeholderTextColor="gray"
               />
               <Text10 color={colors.theme} text={'Per Night'} />
@@ -334,11 +340,13 @@ const AssignVechicleInformation = () => {
             </View>
             <View style={styles.container}>
               <TextInput
+                            keyboardType='number-pad'
+
                 style={styles.input}
                 placeholder={'Charges'}
                 placeholderTextColor="gray"
               />
-              <Text10 color={colors.theme} text={'Per Night'} />
+              <Text10 color={colors.theme} text={'Per KM'} />
             </View>
             <View>
               <View
@@ -353,7 +361,7 @@ const AssignVechicleInformation = () => {
                     right: moderateScale(20),
                   }}>
                   <TouchableOpacity
-                    onPress={() => setPrefrence(1)}
+                    // onPress={() => setPrefrence(1)}
                     style={{flexDirection: 'row', alignItems: 'center'}}>
                     <View style={{height: 22, width: 22}}>
                       <Image

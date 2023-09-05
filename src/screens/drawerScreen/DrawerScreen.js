@@ -21,7 +21,7 @@ const DrawerScreen = (props) => {
         first: [
             {
                 name:'OverView',
-                title:'OverView'
+                title:'Overview'
             },
 
             // {
@@ -30,7 +30,7 @@ const DrawerScreen = (props) => {
             // },
             {
                 name: 'DriverList',
-                title: 'Driver'
+                title: 'Drivers'
             },
             {
                 name: 'MyRide',
@@ -45,10 +45,10 @@ const DrawerScreen = (props) => {
                 title: 'Bank account '
             },
             // 1. Pre bids
-            // {
-            //     name: 'Notification',
-            //     title: 'Wallet'
-            // },
+            {
+                name: 'Wallet',
+                title: 'Wallet'
+            },
         ],
         second: [
             {
@@ -69,7 +69,7 @@ const DrawerScreen = (props) => {
         third: [
             {
                 name: 'AboutApp',
-                title: 'About'
+                title: 'About Us'
             },
             {
                 name: 'AboutApp',

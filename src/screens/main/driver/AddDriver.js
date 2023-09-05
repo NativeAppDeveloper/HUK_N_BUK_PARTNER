@@ -75,12 +75,13 @@ const AddDriver = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
-                <Text14 text={'+91'} color={colors.theme} mt={1} />
+                <Text14  text={'+91'} color={colors.theme} mt={1} />
                 <TextInput
+                keyboardType='number-pad'
                   maxLength={10}
                   placeholderTextColor={colors.gray}
-                  placeholder="  Mobile no."
-                  style={{fontFamily: fonts.medium}}
+                  placeholder="  Contact Number"
+                  style={{fontFamily: fonts.medium,width:'90%'}}
                 />
               </View>
             </View>

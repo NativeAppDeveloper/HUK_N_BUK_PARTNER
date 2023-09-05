@@ -89,7 +89,7 @@ const InsuranceDetails = ({route}) => {
                   <Text14
                     mt={1}
                     color={colors.placeholderColor}
-                    text={'  Upload Registration Certificate'}
+                    text={'  Upload Insurance Certificate'}
                   />
                 </View>
               </View>

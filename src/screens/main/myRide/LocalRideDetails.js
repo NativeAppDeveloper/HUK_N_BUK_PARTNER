@@ -102,7 +102,7 @@ const LocalRideDetails = ({route}) => {
           <View style={{width: '100%', alignItems: 'center'}}>
             <Text18 color={colors.theme} text={'Ride Details'} />
             <Text
-              style={{fontSize: 10, marginTop: 10, fontFamily: fonts.regular}}>
+              style={{fontSize: 10, marginTop: 10, fontFamily: fonts.regular,color:colors.secondry}}>
               Tue, 23 Feb 2020 12:00PM • ID: 2130812309 • Round Tripaå
             </Text>
           </View>
@@ -174,6 +174,10 @@ const LocalRideDetails = ({route}) => {
                 text={'UP16-BV-0000'}
               />
             </View>
+
+
+
+            
           </View>
 
           <View
@@ -229,7 +233,20 @@ const LocalRideDetails = ({route}) => {
                 borderBottomWidth: 1,
                 borderColor: colors.borderC,
               }}>
-              <Text style={{fontSize: 10,fontFamily:fonts.bold,color:colors.theme}}>Booking Timing</Text>
+                    <View
+              style={{
+                height: moderateScale(40),
+                width: moderateScale(80),
+                borderRadius: moderateScale(20),
+                //   borderWidth: 1,
+                //   overflow: 'hidden',
+              }}>
+              <Image
+                resizeMode="contain"
+                style={CommonStyle.img}
+                source={icon.profile}
+              />
+            </View>
 
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image
@@ -237,7 +254,7 @@ const LocalRideDetails = ({route}) => {
                   style={{height: 20, width: 20}}
                   source={icon.timer1}
                 />
-                <Text style={{fontSize: 10}}> 3 Hours / 30 Km</Text>
+                <Text style={{fontSize: 10,color:colors.secondry}}> 3 Hours / 30 Km</Text>
               </View>
             </View>
             //#endregion

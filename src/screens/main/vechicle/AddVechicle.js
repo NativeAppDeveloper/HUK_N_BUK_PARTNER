@@ -80,7 +80,7 @@ const AddVechicle = ({route}) => {
                 </View>
                   <View>
                     {
-                      paramData?<Image style={{height:18,width:18}} source={require('../../../assets/verify.png')}/>:
+                      paramData?<Image resizeMode='contain' style={{height:18,width:18}} source={ind%2==0?require('../../../assets/verify.png'):require('../../../assets/red.png')}/>:
                 <ChevronRightIcon color={colors.placeholderColor} />
                     }
 
