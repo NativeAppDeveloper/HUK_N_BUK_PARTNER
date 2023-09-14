@@ -38,6 +38,7 @@ const AssignVechicleInformation = () => {
   const [prefrence, setPrefrence] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
 
+  
   const handleVehicleChange = value => {
     setSelectedVehicle(value);
   };

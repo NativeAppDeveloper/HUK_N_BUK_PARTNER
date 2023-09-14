@@ -25,7 +25,7 @@ import {
   View,
 } from 'react-native';
 import Text10 from '../../../component/customText/Text10';
-import { commonPadding } from '../../../utils/Helper';
+import { commonPadding, iphone8 } from '../../../utils/Helper';
 
 const MyBidRideDetails = ({route}) => {
   const navigation = useNavigation();

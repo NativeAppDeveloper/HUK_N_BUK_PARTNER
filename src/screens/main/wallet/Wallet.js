@@ -108,7 +108,7 @@ const Wallet = () => {
   };
   return (
     <View style={CommonStyle.container}>
-      {/* <BackHandler name={'Wallet'} /> */}
+      <BackHandler name={'Wallet'} />
 
       {
         <View
@@ -117,17 +117,17 @@ const Wallet = () => {
             alignSelf: 'center',
             backgroundColor: colors.theme,
             paddingHorizontal: scale(15),
-            paddingVertical: moderateScale(10),
+            // paddingVertical: moderateScale(10),
             paddingBottom: moderateScale(20),
           }}>
-          <SafeAreaView />
+          {/* <SafeAreaView /> */}
 
-          <Text18 text={'Wallet'} color={colors.white} textAlign={'center'} />
+          {/* <Text18 text={'Wallet'} color={colors.white} textAlign={'center'} /> */}
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: moderateScale(10),
+              // marginTop: moderateScale(10),
               alignItems: 'center',
             }}>
             <View>

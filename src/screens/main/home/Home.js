@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
@@ -14,7 +21,11 @@ import {CommonStyle, colors, fonts} from '../../../utils/Styles';
 import {icon, images} from '../../../utils/Image';
 import {width} from '../../../utils/Helper';
 import {TextInput} from 'react-native-gesture-handler';
-import {BellIcon, MagnifyingGlassIcon, MapPinIcon} from 'react-native-heroicons/solid';
+import {
+  BellIcon,
+  MagnifyingGlassIcon,
+  MapPinIcon,
+} from 'react-native-heroicons/solid';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -25,6 +36,8 @@ export default function Home() {
 
   return (
     <View style={{flex: 1}}>
+      <CustomMapView Marker={true} mapStyle={styles.mapStyle} />
+
       {
         //#region header Start
         <View
@@ -33,16 +46,27 @@ export default function Home() {
             alignSelf: 'center',
             backgroundColor: colors.theme,
             elevation: 5,
-            paddingHorizontal:moderateScale(15),
-            paddingVertical:moderateScale(15)
+            paddingHorizontal: moderateScale(15),
+            paddingVertical: moderateScale(15),
+            paddingTop:
+              Platform.OS == 'ios' ? moderateScale(45) : moderateScale(5),
           }}>
           {Platform.OS == 'android' && <SafeAreaView />}
 
-          <View style={{flexDirection: 'row', alignItems: 'center',alignItems:'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              alignItems: 'center',
+              zIndex: 999,
+            }}>
             <TouchableOpacity
               onPress={() => navigation.openDrawer()}
               style={{height: moderateScale(17), width: moderateScale(17)}}>
-              <Image style={[CommonStyle.img,{tintColor:colors.white}]} source={icon.Vector} />
+              <Image
+                style={[CommonStyle.img, {tintColor: colors.white}]}
+                source={icon.Vector}
+              />
             </TouchableOpacity>
 
             <View style={{marginLeft: moderateScale(15)}}>
@@ -53,15 +77,14 @@ export default function Home() {
                 mt={moderateScale(1)}
                 text={'New Delhi'}
               />
-              <View style={{flexDirection:'row',marginTop:3}}>
-              <MapPinIcon color={colors.yellow} size={moderateScale(11)}/>
-              <Text12 mt={1} color={colors.white} ff text={'Noida, 1202'}/>
+              <View style={{flexDirection: 'row', marginTop: 3}}>
+                <MapPinIcon color={colors.yellow} size={moderateScale(11)} />
+                <Text12 mt={1} color={colors.white} ff text={'Noida, 1202'} />
               </View>
             </View>
 
-
-            <TouchableOpacity style={{position:'absolute',right:0,top:15}}>
-              <BellIcon color={colors.white}/>
+            <TouchableOpacity style={{position: 'absolute', right: 0, top: 15}}>
+              <BellIcon color={colors.white} />
               {/* <Image source={icon.bell} style={{tintColor:colors.white,alignSelf:'flex-end',height:moderateScale(25),width:moderateScale(25)}}/> */}
             </TouchableOpacity>
           </View>
@@ -79,7 +102,6 @@ export default function Home() {
         </View>
         //#endregion
       }
-      <CustomMapView Marker={true} mapStyle={styles.mapStyle} />
     </View>
   );
 }

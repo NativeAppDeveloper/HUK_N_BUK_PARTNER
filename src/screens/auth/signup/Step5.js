@@ -10,10 +10,24 @@ import Button from '../../../component/customButton/Button'
 import { icon } from '../../../utils/Image'
 import SignupSeteps from '../../../component/common/SignupSeteps'
 import { useNavigation } from '@react-navigation/core'
+import { signUpFlow, signupData } from '../../../utils/localVariable'
+import { errorTost } from '../../../utils/Helper'
 
 const Step5 = () => {
     const [step, setStep] = useState(1)
     const navigation = useNavigation()
+    const [mobile,setMobile]=useState('')
+
+
+    const submitHandler=()=>{
+        if(mobile.length==0){
+            errorTost('Please enter mobile number')
+            return
+        }
+        signupData.mobile=mobile
+        signUpFlow.flow='mobile'
+        navigation.navigate('Otp',{mobile:mobile})
+    }
     return (
         <SafeAreaView>
             <View style={{ width: "90%", alignSelf: 'center' }}>
@@ -21,7 +35,8 @@ const Step5 = () => {
                     //#region header
                     <SignupSeteps
 
-                        step={'Step 5/5'} />
+                        step={'Step 1/2'}
+                         />
                     //#endregion
                 }
 
@@ -29,9 +44,7 @@ const Step5 = () => {
                     //#region  headet text
                     <View style={{ marginTop: moderateVerticalScale(20) }} >
                         <Text24 text={'Enter Your Mobile No.'} />
-                        <Text14
-                            fontFamily={fonts.regular}
-                            color={colors.gray} text={`Please provide your complete name `} />
+                       
                     </View>
                     //#endregion
                 }
@@ -42,6 +55,8 @@ const Step5 = () => {
                         //#region Name Components
                         <View style={{ width: '100%' }}>
                             <Input
+                                value={mobile}
+                                onChangeText={(val)=>setMobile(val)}
                                 placeHolder={'Enter Mobile No.'}
                                 mt={moderateVerticalScale(30)}
                             />
@@ -54,7 +69,7 @@ const Step5 = () => {
                         //#region  Next Button
                         <View>
                             <Button
-                                onPress={() => navigation.navigate('RegistrationComplete')}
+                                onPress={() =>submitHandler()}
                                 width={'100%'}
                                 mt={moderateVerticalScale(20)}
                                 text={'Submit'}

@@ -5,7 +5,9 @@ import { moderateScale, scale } from 'react-native-size-matters'
 
 export default function Input({
   placeHolder,
-  mt
+  mt,
+  value,
+  onChangeText
 }) {
   return (
     <View style={{
@@ -23,7 +25,10 @@ export default function Input({
       borderColor:colors.borderC,
       // paddingVertical:moderateScale(5)
     }}>
-      <TextInput style={{fontFamily:fonts.medium,color:colors.black}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
+      <TextInput
+      value={value}
+      onChangeText={onChangeText}
+       style={{fontFamily:fonts.medium,color:colors.black}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
     </View>
   )
 }

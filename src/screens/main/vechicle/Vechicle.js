@@ -41,7 +41,7 @@ const Vechicle = () => {
 
         <TouchableOpacity 
         onPress={()=>navigation.navigate('AddVechicle')}
-        style={{zIndex:999,position:'absolute',right:moderateScale(20),top:moderateScale(25)}}>
+        style={{zIndex:999,position:'absolute',right:moderateScale(20),top:Platform.OS=='ios'?moderateScale(65):moderateScale(25)}}>
           <Text14 color={colors.yellow} text={'+Add'}/>
         </TouchableOpacity>
       </View>
@@ -51,6 +51,10 @@ const Vechicle = () => {
           <View style={styles.statusInfo}>
             <Text12 text={'Vehicle Online'} color={colors.green} />
             <Switch
+            // height={100}
+            // width={200}
+            // style={{height:100,width:100}}
+            
               trackColor={{false: '#767577', true: colors.green}}
               thumbColor={isEnabled ? colors.lightGreen : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"

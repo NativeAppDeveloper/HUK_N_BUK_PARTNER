@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native';
+import {View, Text, TouchableOpacity, Image, TextInput, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -81,7 +81,7 @@ const AddDriver = () => {
                   maxLength={10}
                   placeholderTextColor={colors.gray}
                   placeholder="  Contact Number"
-                  style={{fontFamily: fonts.medium,width:'90%'}}
+                  style={{fontFamily: fonts.medium,width:'90%',paddingVertical:Platform.OS=='ios'?moderateScale(10):3}}
                 />
               </View>
             </View>

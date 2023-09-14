@@ -8,7 +8,7 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {icon, images} from '../../utils/Image';
 import {
@@ -23,14 +23,57 @@ import Button from '../../component/customButton/Button';
 import Text12 from '../../component/customText/Text12';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
-import {commonPadding} from '../../utils/Helper';
+import {commonPadding, errorTost} from '../../utils/Helper';
 import Text18 from '../../component/customText/Text18';
 import Text10 from '../../component/customText/Text10';
 import Text24 from '../../component/customText/Text24';
+import { checkPhoneEmailSercvies } from '../../services/Services';
+import { signUpFlow } from '../../utils/localVariable';
 
 const Login = ({route}) => {
   const navigation = useNavigation();
   const paramData = route?.params?.flow;
+  const [mobile,setMobile]=useState('')
+
+  const SubmitHandler=async()=>{
+
+    navigation.navigate('Otp', {mobile:mobile})
+
+    if(mobile==""){
+      errorTost('Please enter mobile number')
+      return
+    }
+    if(mobile.length<9){
+      errorTost('Please enter valid mobile number')
+      return
+    }
+
+    signUpFlow.flow='login'
+
+
+    let payload={
+      phoneNumber:mobile,
+      email:''
+    }
+
+    console.log(payload)
+    try {
+      let response = await checkPhoneEmailSercvies(payload)
+      console.log(response.data)
+      // return
+    // navigation.navigate('Otp', {flow: paramData,mobile:mobile})
+
+    } catch (error) {
+      navigation.navigate('Otp', {flow: paramData,mobile:mobile})
+
+      console.log(error.response.data,'checkPhoneEmailSercvies')
+    }
+  }
+
+
+  console.log(signUpFlow,'dskjfhsjkdfhsdjf')
+  
+  
   return (
     <>
     <SafeAreaView  style={{
@@ -46,21 +89,12 @@ const Login = ({route}) => {
             // marginTop: moderateScale(90),
           }}>
           <View
-            style={{
-              backgroundColor: colors.theme,
-              paddingHorizontal: commonPadding,
-              paddingVertical: moderateScale(15),
-            }}>
-            {paramData == 'Signup' && (
+            style={styles.innercontainer}>
+            {signUpFlow.flow == 'Signup' && (
               <TouchableOpacity>
                 <Image
                   source={icon.backBtn}
-                  style={{
-                    height: moderateScale(35),
-                    width: moderateScale(35),
-                    tintColor: colors.white,
-                    marginBottom: moderateScale(20),
-                  }}
+                  style={styles.text}
                 />
               </TouchableOpacity>
             )}
@@ -79,6 +113,7 @@ const Login = ({route}) => {
             <View style={{paddingTop: moderateScale(20)}}>
               <Text24 text={'Mobile Number'} color={colors.white} />
               <Text14
+
                 text={'Enter your mobile number'}
                 fontFamily={fonts.regular}
                 color={colors.secondry}
@@ -90,21 +125,11 @@ const Login = ({route}) => {
             //#region input container
             <View style={{marginTop: moderateScale(20)}}>
               <View
-                style={{
-                  backgroundColor: colors.white,
-                  marginTop: moderateScale(20),
-                  paddingVertical: moderateScale(5),
-                  width: '90%',
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderColor: colors.borderC,
-                  paddingHorizontal: scale(10),
-                  borderRadius: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+                style={styles.box}>
                 <Text14 text={'+91'} color={colors.theme} mt={1} />
                 <TextInput
+                onChangeText={(val)=>setMobile(val)}
+                value={mobile}
                 keyboardType='number-pad'
                   maxLength={10}
                   placeholderTextColor={colors.gray}
@@ -119,7 +144,7 @@ const Login = ({route}) => {
               </View>
 
               <Button
-                onPress={() => navigation.navigate('Otp', {flow: paramData})}
+                onPress={() => SubmitHandler()}
                 mt={moderateScale(40)}
                 text={'Submit'}
               />
@@ -178,6 +203,30 @@ const Login = ({route}) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    height: moderateScale(35),
+    width: moderateScale(35),
+    tintColor: colors.white,
+    marginBottom: moderateScale(20),
+  },
+  innercontainer: {
+    backgroundColor: colors.theme,
+    paddingHorizontal: commonPadding,
+    paddingVertical: moderateScale(15),
+  },
+  box: {
+    backgroundColor: colors.white,
+    marginTop: moderateScale(20),
+    paddingVertical: moderateScale(5),
+    width: '90%',
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: colors.borderC,
+    paddingHorizontal: scale(10),
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 import Text14 from '../../../component/customText/Text14';
 import Text12 from '../../../component/customText/Text12';
 import Dash from 'react-native-dash-2';
+import { iphone8 } from '../../../utils/Helper';
 
 const PreBid_Create = () => {
   const navigation = useNavigation();

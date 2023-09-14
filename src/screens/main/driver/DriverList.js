@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ScrollView, Platform} from 'react-native';
 import React, { useState } from 'react';
 import BackHandler from '../../../component/BackHandler';
 import {useNavigation} from '@react-navigation/native';
@@ -14,12 +14,24 @@ import Text14 from '../../../component/customText/Text14';
 import Text10 from '../../../component/customText/Text10';
 import {StarIcon} from 'react-native-heroicons/solid';
 import Button from '../../../component/customButton/Button';
-import {width} from '../../../utils/Helper';
+import {iphone8, width} from '../../../utils/Helper';
 
 const DriverList = ({route}) => {
   const navigation = useNavigation();
   const paramData = route?.params?.flow;
   const [selectedIndex,setSelectedIndex]=useState(null)
+
+  const paddingTopFun=()=>{
+    if(Platform.OS=='ios'&& !iphone8){
+     return moderateScale(60)
+    }
+    if(Platform.OS=='ios'&&iphone8){
+    return  moderateScale(25)
+    }
+    else{
+     return moderateScale(25)
+    }
+  } 
   // console.log(paramData,'=-=-=');
   return (
     <View style={{flex: 1}}>
@@ -31,8 +43,9 @@ const DriverList = ({route}) => {
           style={{
             position: 'absolute',
             zIndex: 999,
-            top: moderateScale(50),
+            top: paddingTopFun(),
             right: moderateScale(20),
+            // paddingTop:paddingTopFun()
           }}>
           <Text14 color={colors.yellow} text={'+Add'} />
         </TouchableOpacity>
@@ -47,7 +60,7 @@ const DriverList = ({route}) => {
                 key={ind}
                 style={{
                   paddingHorizontal: scale(10),
-                  borderTopColor: colors.placeholderColor,
+                  // borderTopColor: colors.placeholderColor,
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -56,9 +69,11 @@ const DriverList = ({route}) => {
                   alignSelf: 'center',
                   paddingVertical: moderateVerticalScale(12),
                   borderRadius: 10,
-                  borderWidth: 1,
-                  borderColor: colors.borderC,
-                  borderColor:paramData&&selectedIndex==ind?colors.yellow:colors.white
+                  // borderWidth: 1,
+                  borderWidth:paramData&&selectedIndex==ind?1:0,
+                  // borderColor: colors.borderC,
+                  borderColor:paramData&&selectedIndex==ind?colors.yellow:colors.white,
+                  overflow:'hidden'
                 }}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('DriverDetails')}

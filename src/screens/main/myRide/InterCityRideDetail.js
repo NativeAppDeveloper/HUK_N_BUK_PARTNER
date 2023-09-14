@@ -32,6 +32,7 @@ import {PlusIcon, StarIcon} from 'react-native-heroicons/solid';
 import {AirbnbRating, Rating} from 'react-native-ratings';
 import CancelModal from '../../../component/modal/CancelModal';
 import Text10 from '../../../component/customText/Text10';
+import Dash from 'react-native-dash-2';
 
 const InterCityRideDetail = ({route}) => {
   const navigation = useNavigation();
@@ -77,7 +78,7 @@ const InterCityRideDetail = ({route}) => {
           backgroundColor: colors.white,
           ...Platform.select({
             ios: {
-              paddingTop: iphone8 ? moderateScale(10) : moderateScale(10),
+              paddingTop: iphone8 ? moderateScale(10) : moderateScale(40),
             },
           }),
         }}>
@@ -240,43 +241,58 @@ const InterCityRideDetail = ({route}) => {
                       </View>
                     </View>
 
-                    <View
-                      style={{
-                        height: 50,
-                        borderColor: 'black',
-                        borderLeftWidth: 1,
-                        borderStyle: 'dashed',
-                        marginHorizontal: scale(10),
-                        // alignItems:'center',
-                        justifyContent: 'center',
-                        paddingLeft: 20,
-                      }}>
+                    <View>
+                      <Dash
+                        style={{
+                          width: 1,
+                          height: 60,
+                          flexDirection: 'column',
+                          left: moderateScale(10),
+                        }}
+                      />
+
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image
-                          style={{height: 17, width: 17}}
-                          source={icon.Time}
-                        />
-                        <Text
+                        style={{
+                          marginHorizontal: scale(10),
+                          // alignItems:'center',
+                          justifyContent: 'center',
+                          // top: moderateVerticalScale(5),
+                          paddingLeft: 20,
+                        }}>
+                        <View
                           style={{
-                            fontSize: 10,
-                            fontFamily: fonts.regular,
-                            color: colors.secondry,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            bottom: moderateScale(15),
+                            paddingHorizontal: moderateScale(15),
                           }}>
-                          {' '}
-                          4h50m
-                        </Text>
-                        <Image
-                          style={{
-                            height: 17,
-                            width: 17,
-                            marginHorizontal: scale(10),
-                          }}
-                          source={icon.distance}
-                        />
-                        <Text style={{fontSize: 10, color: '#f7954a'}}>
-                          456 km
-                        </Text>
+                          <Image
+                            style={{height: 17, width: 17}}
+                            source={icon.Time}
+                          />
+
+                          <Text
+                            style={{
+                              fontSize: 10,
+                              fontFamily: fonts.regular,
+                              color: colors.theme,
+                            }}>
+                            {' '}
+                            4h50m
+                          </Text>
+                          <Image
+                            style={{
+                              height: 17,
+                              width: 17,
+                              marginHorizontal: scale(10),
+                            }}
+                            source={icon.distance}
+                          />
+                          <Text style={{fontSize: 10, color: '#f7954a'}}>
+                            456 km
+                          </Text>
+                        </View>
                       </View>
                     </View>
 
@@ -442,26 +458,33 @@ const InterCityRideDetail = ({route}) => {
                 //#endregion
               }
 
-
-              {rideStatus=="Cancelled"&&
-                //#region  for cancelation
-                <View style={{paddingHorizontal:commonPadding,paddingVertical:moderateScale(10),borderBottomWidth:1,borderColor:colors.borderC}}>
-                    <Text12 
-                    color={colors.theme}
-                    text={'Driver Cancelled This Ride'}
+              {
+                rideStatus == 'Cancelled' && (
+                  //#region  for cancelation
+                  <View
+                    style={{
+                      paddingHorizontal: commonPadding,
+                      paddingVertical: moderateScale(10),
+                      borderBottomWidth: 1,
+                      borderColor: colors.borderC,
+                    }}>
+                    <Text12
+                      color={colors.theme}
+                      text={'Driver Cancelled This Ride'}
                     />
 
-                    <Text10 mt={10} text={'Reason'} color={colors.secondry}/>
-                    <Text12 
-                    color={colors.theme}
-                    text={'Rider taking too much time'}
+                    <Text10 mt={10} text={'Reason'} color={colors.secondry} />
+                    <Text12
+                      color={colors.theme}
+                      text={'Rider taking too much time'}
                     />
-                </View>
+                  </View>
+                )
                 //#endregion
               }
 
               {
-               //#region estimated price
+                //#region estimated price
                 <View
                   style={{
                     paddingHorizontal: commonPadding,

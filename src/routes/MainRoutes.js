@@ -20,7 +20,6 @@ import PushNotifaction from '../screens/main/setting/PushNotifaction';
 import Payments from '../screens/main/setting/Payments';
 import HelpAndSupport from '../screens/main/help_support/HelpAndSupport';
 import RequestCallBack from '../screens/main/help_support/RequestCallBack';
-import Wallet from '../screens/main/wallet/Wallet';
 import AddMoney from '../screens/main/wallet/AddMoney';
 import RideType from '../screens/main/myRide/RideType';
 import RdieDetails from '../screens/main/myRide/RideDetails';
@@ -67,6 +66,7 @@ import MyBidRideDetails from '../screens/main/myBids/MyBidRideDetails';
 import AssignVechicle from '../screens/main/myBids/AssignVechicle';
 import AssignVechicleInformation from '../screens/main/myBids/AssignVechicleInformation';
 import RoundTripDetails from '../screens/main/myBids/RoundTripDetails';
+import Wallet from '../screens/main/wallet/Wallet';
 // import MyBids from '../screens/main/myBids/MyBids';
 
 const Drawer = createDrawerNavigator();
@@ -300,6 +300,8 @@ const MainRoutes = () => {
         <Stack.Screen name="RoundTripDetails" component={RoundTripDetails} />
 
         
+        <Stack.Screen name="Wallet" component={Wallet} />
+
         
           {/* route */}
 

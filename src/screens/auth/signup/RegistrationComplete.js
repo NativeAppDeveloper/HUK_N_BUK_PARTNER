@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux'
 
 const RegistrationComplete = () => {
   const dispatch=useDispatch()
+
+ 
   return (
     <ImageBackground source={images.registrationComplete} style={{flex:1,justifyContent:"flex-end",paddingBottom:moderateScale(30)}}>
         <Button onPress={()=>{

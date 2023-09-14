@@ -19,15 +19,17 @@ const DrawerScreen = (props) => {
 
     const drawerData = {
         first: [
+
+            {
+                name: 'MyProfile',
+                title: 'My Profile'
+            },
             {
                 name:'OverView',
                 title:'Overview'
             },
 
-            // {
-            //     name: 'MyProfile',
-            //     title: 'My Profile'
-            // },
+        
             {
                 name: 'DriverList',
                 title: 'Drivers'

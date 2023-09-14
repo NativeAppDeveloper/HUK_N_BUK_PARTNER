@@ -25,7 +25,7 @@ import Dash from 'react-native-dash-2';
 import Text16 from '../../../component/customText/Text16';
 import Button from '../../../component/customButton/Button';
 import DeleteModal from './DeleteModal';
-import {commonPadding} from '../../../utils/Helper';
+import {commonPadding, iphone8} from '../../../utils/Helper';
 
 const PreBid_Details = () => {
   const navigation = useNavigation();

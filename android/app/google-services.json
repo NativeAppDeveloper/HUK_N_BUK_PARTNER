@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "122061173789",
+    "project_id": "hunnbukpartner",
+    "storage_bucket": "hunnbukpartner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122061173789:android:21ea287ad0aba47fb442f4",
+        "android_client_info": {
+          "package_name": "com.huk_n_buk_partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122061173789-1dabiil1gepvdfhnf39bvn4frvp1c70r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huk_n_buk_partner",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "122061173789-o7vc0qvarqoicgaa86bgkuuq4gms47vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDldfub8Rk79qHV9quhvV83sLG6udUOmNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122061173789-o7vc0qvarqoicgaa86bgkuuq4gms47vr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "122061173789-72hcsj77tr92ib46se1vb3jmurmbvmp9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huk-partner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

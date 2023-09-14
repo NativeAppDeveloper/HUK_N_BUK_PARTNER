@@ -20,6 +20,17 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.122061173789-72hcsj77tr92ib46se1vb3jmurmbvmp9</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -36,8 +47,7 @@
 		</dict>
 	</dict>
 
-
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Huk would like to use your Location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Huk would like to use your Location</string>
@@ -45,7 +55,7 @@
 	<string>Huk would like to use your Location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Huk would like to use your Location</string>
-
+	
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>

@@ -25,7 +25,7 @@ import {
   View,
 } from 'react-native';
 import Text10 from '../../../component/customText/Text10';
-import {commonPadding} from '../../../utils/Helper';
+import {commonPadding, iphone8} from '../../../utils/Helper';
 import { UsersIcon } from 'react-native-heroicons/outline';
 
 const RoundTripDetails = ({route}) => {

@@ -73,7 +73,7 @@ const LocalRideDetails = ({route}) => {
           backgroundColor: colors.white,
           ...Platform.select({
             ios: {
-              paddingTop: iphone8 ? moderateScale(10) : moderateScale(10),
+              paddingTop: iphone8 ? moderateScale(10) : moderateScale(40),
             },
           }),
         }}>

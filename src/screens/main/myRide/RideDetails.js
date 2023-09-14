@@ -8,36 +8,37 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   moderateScale,
   moderateVerticalScale,
   scale,
 } from 'react-native-size-matters';
-import { height, iphone8, width } from '../../../utils/Helper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {height, iphone8, width} from '../../../utils/Helper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Text18 from '../../../component/customText/Text18';
-import { icon, images } from '../../../utils/Image';
-import { CommonStyle, colors, fonts } from '../../../utils/Styles';
+import {icon, images} from '../../../utils/Image';
+import {CommonStyle, colors, fonts} from '../../../utils/Styles';
 import CustomMapView from '../../../component/CustomMapView';
 import Text12 from '../../../component/customText/Text12';
 import Text14 from '../../../component/customText/Text14';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import Button from '../../../component/customButton/Button';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import RideCancelModal from '../../../component/modal/RideCancelModal';
-import { PlusIcon, StarIcon } from 'react-native-heroicons/solid';
-import { AirbnbRating } from 'react-native-ratings';
+import {PlusIcon, StarIcon} from 'react-native-heroicons/solid';
+import {AirbnbRating} from 'react-native-ratings';
 import CancelModal from '../../../component/modal/CancelModal';
+import Dash from 'react-native-dash-2';
 
-const RdieDetails = ({ route }) => {
+const RdieDetails = ({route}) => {
   const navigation = useNavigation();
   const [outStationIndex, setOutStationIndex] = useState(0);
   const sheetRef = useRef(null);
   const [indexx, setIndex] = useState(0);
   const [cancel, setCancelRide] = useState(false);
-  const [cancelStatus, setCancelStatus] = useState(false)
+  const [cancelStatus, setCancelStatus] = useState(false);
   const rideStatus = route?.params?.rideStatus;
   console.log(rideStatus, '=-==-=ride satus');
 
@@ -65,12 +66,18 @@ const RdieDetails = ({ route }) => {
   return (
     <>
       {Platform.OS == 'android' && <SafeAreaView />}
+
+      {
+        //#region  map
+        <CustomMapView Marker={true} mapStyle={styles.mapStyle} />
+        //#endregion
+      }
       <View
         style={{
           backgroundColor: colors.white,
           ...Platform.select({
             ios: {
-              paddingTop: iphone8 ? moderateScale(10) : moderateScale(10),
+              paddingTop: iphone8 ? moderateScale(10) : moderateScale(40),
             },
           }),
         }}>
@@ -90,16 +97,21 @@ const RdieDetails = ({ route }) => {
                 width: moderateVerticalScale(30),
               }}>
               <Image
-                style={[CommonStyle.img, { tintColor: colors.theme }]}
+                style={[CommonStyle.img, {tintColor: colors.theme}]}
                 source={icon.backBtn}
               />
             </View>
           </TouchableOpacity>
 
-          <View style={{ width: '100%', alignItems: 'center' }}>
+          <View style={{width: '100%', alignItems: 'center'}}>
             <Text18 color={colors.theme} text={'Ride Details'} />
             <Text
-              style={{ fontSize: 10, marginTop: 10, fontFamily: fonts.regular,color:colors.secondry }}>
+              style={{
+                fontSize: 10,
+                marginTop: 10,
+                fontFamily: fonts.regular,
+                color: colors.secondry,
+              }}>
               Tue, 23 Feb 2020 12:00PM • ID: 2130812309 • Round Trip
             </Text>
           </View>
@@ -118,12 +130,6 @@ const RdieDetails = ({ route }) => {
           //#endregion
         }
       </View>
-
-      {
-        //#region  map
-        <CustomMapView Marker={true} mapStyle={styles.mapStyle} />
-        //#endregion
-      }
 
       <GestureHandlerRootView
         style={{
@@ -165,24 +171,30 @@ const RdieDetails = ({ route }) => {
                   />
                 </View>
 
-                <View style={{ marginLeft: moderateScale(10),flexDirection:'row',justifyContent:'space-between',width:"80%" }}>
+                <View
+                  style={{
+                    marginLeft: moderateScale(10),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: '80%',
+                  }}>
                   <View>
-                  <Text14
-                    color={colors.theme}
-                    mt={1}
-                    fontFamily={fonts.bold}
-                    text={'Askit'}
-                  />
-                  <Text12
-                    fontFamily={fonts.regular}
-                    color={colors.gray}
-                    text={'UP16-BV-0000 • Sedan'}
-                  />
+                    <Text14
+                      color={colors.theme}
+                      mt={1}
+                      fontFamily={fonts.bold}
+                      text={'Askit'}
+                    />
+                    <Text12
+                      fontFamily={fonts.regular}
+                      color={colors.gray}
+                      text={'UP16-BV-0000 • Sedan'}
+                    />
                   </View>
 
-                  <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <StarIcon color={colors.yellow} size={moderateScale(10)}/>
-                    <Text12 text={'4.5'} color={colors.secondry}/>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <StarIcon color={colors.yellow} size={moderateScale(10)} />
+                    <Text12 text={'4.5'} color={colors.secondry} />
                   </View>
                 </View>
               </View>
@@ -203,7 +215,7 @@ const RdieDetails = ({ route }) => {
                       marginTop: moderateScale(10),
                     }}>
                     <View>
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={{flexDirection: 'row'}}>
                         <View
                           style={{
                             height: moderateScale(23),
@@ -230,51 +242,58 @@ const RdieDetails = ({ route }) => {
                       </View>
                     </View>
 
-                    <View
-                      style={{
-                        height: 50,
-                        borderColor: 'black',
-                        borderLeftWidth: 1,
-                        borderStyle: 'dashed',
-                        marginHorizontal: scale(10),
-                        // alignItems:'center',
-                        justifyContent: 'center',
-                        paddingLeft: 20,
-                      }}>
-                      <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image
-                          style={{ height: 17, width: 17 }}
-                          source={icon.Time}
-                        />
-                        <Text style={{ fontSize: 10, fontFamily: fonts.regular }}>
-                          {' '}
-                          4h50m
-                        </Text>
-                        <Image
-                          style={{
-                            height: 17,
-                            width: 17,
-                            marginHorizontal: scale(10),
-                          }}
-                          source={icon.distance}
-                        />
-                        <Text style={{ fontSize: 10, color: '#f7954a' }}>
-                          456 km
-                        </Text>
-                      </View>
-                    </View>
+                          <View style={{flexDirection:'row'}}>
+                          <Dash
+              style={{
+                width: 1,
+                height: 60,
+                flexDirection: 'column',
+                left: moderateScale(10),
+              }}
+            />
 
-                    <View style={{ flexDirection: 'row', marginTop: 8 }}>
+            <View
+              style={{
+                marginHorizontal: scale(10),
+                // alignItems:'center',
+                justifyContent: 'center',
+                // top: moderateVerticalScale(5),
+                paddingLeft: 20,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  position: 'absolute',
+                  bottom: moderateScale(15),
+                  paddingHorizontal:moderateScale(15)
+                }}>
+                <Image style={{height: 17, width: 17}} source={icon.Time} />
+
+                <Text style={{fontSize: 10, fontFamily: fonts.regular,color:colors.theme}}>
+                  {' '}
+                  4h50m
+                </Text>
+                <Image
+                  style={{
+                    height: 17,
+                    width: 17,
+                    marginHorizontal: scale(10),
+                  }}
+                  source={icon.distance}
+                />
+                <Text style={{fontSize: 10, color: '#f7954a'}}>456 km</Text>
+              </View>
+            </View>
+                          </View>
+
+                    <View style={{flexDirection: 'row', marginTop: 8}}>
                       <View
                         style={{
                           height: moderateScale(23),
                           width: moderateScale(23),
                         }}>
-                        <Image
-                          source={icon.location}
-                          style={CommonStyle.img}
-                        />
+                        <Image source={icon.location} style={CommonStyle.img} />
                       </View>
 
                       <View>
@@ -322,16 +341,16 @@ const RdieDetails = ({ route }) => {
                       />
                     </View>
 
-                    <View style={{ marginLeft: 15 }}>
-                      <Text14
-                        color={colors.theme}
-                        mt={1}
-                        text={'Akshit'}
-                      />
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <StarIcon color={colors.yellow} size={moderateScale(10)}/>
-                    <Text12 text={'4.5'} color={colors.secondry}/>
-                  </View>
+                    <View style={{marginLeft: 15}}>
+                      <Text14 color={colors.theme} mt={1} text={'Akshit'} />
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <StarIcon
+                          color={colors.yellow}
+                          size={moderateScale(10)}
+                        />
+                        <Text12 text={'4.5'} color={colors.secondry} />
+                      </View>
                     </View>
 
                     <View
@@ -349,16 +368,23 @@ const RdieDetails = ({ route }) => {
                         mt={1}
                       />
 
-                      <View style={{flexDirection:'row',marginTop:5}}>
-                      <Image  resizeMode='contain' style={{height:moderateScale(10),width:moderateScale(10)}} source={icon.master}/>
-                      <Text12
-                        color={colors.theme}
-                        git
-                        mt={1}
-                        fontFamily={fonts.regular}
-                        textAlign={'right'}
-                        text={' 8268'}
-                      />
+                      <View style={{flexDirection: 'row', marginTop: 5}}>
+                        <Image
+                          resizeMode="contain"
+                          style={{
+                            height: moderateScale(10),
+                            width: moderateScale(10),
+                          }}
+                          source={icon.master}
+                        />
+                        <Text12
+                          color={colors.theme}
+                          git
+                          mt={1}
+                          fontFamily={fonts.regular}
+                          textAlign={'right'}
+                          text={' 8268'}
+                        />
                       </View>
                     </View>
                   </View>
@@ -373,7 +399,7 @@ const RdieDetails = ({ route }) => {
                         paddingHorizontal: scale(15),
                         borderTopWidth: 0.5,
                         marginTop: moderateScale(20),
-                        borderColor: colors.placeholderColor
+                        borderColor: colors.placeholderColor,
                       }}>
                       <Text14 mt={15} text={'Rated'} />
                       <AirbnbRating
@@ -412,7 +438,7 @@ const RdieDetails = ({ route }) => {
                       }}>
                       <Text14 text={'Amenities'} />
 
-                      <View style={{ flexDirection: 'row' }}>
+                      <View style={{flexDirection: 'row'}}>
                         {['Water Bottle', 'Wifi', 'Tissues', 'Newspaper'].map(
                           (data, ind) => {
                             return (
@@ -485,10 +511,8 @@ const RdieDetails = ({ route }) => {
                   //#endregion
                 }
 
-
-
                 {
-                  rideStatus == "Completed" && (
+                  rideStatus == 'Completed' && (
                     //#region  odometer details
                     <View
                       style={{
@@ -523,7 +547,7 @@ const RdieDetails = ({ route }) => {
                         </View>
                       </View>
 
-                      <View style={{alignItems:'center'}}>
+                      <View style={{alignItems: 'center'}}>
                         <Text12
                           color={colors.theme}
                           fontFamily={fonts.bold}
@@ -654,11 +678,12 @@ const RdieDetails = ({ route }) => {
                   //#endregion
                 }
               </View>
-              {false&&(rideStatus == 'Upcoming' || rideStatus == 'Ongoing') && (
-                <View style={{ marginVertical: moderateScale(15) }}>
-                  <Button width={'95%'} text={'Pay ₹5125'} />
-                </View>
-              )}
+              {false &&
+                (rideStatus == 'Upcoming' || rideStatus == 'Ongoing') && (
+                  <View style={{marginVertical: moderateScale(15)}}>
+                    <Button width={'95%'} text={'Pay ₹5125'} />
+                  </View>
+                )}
 
               {rideStatus == 'Upcoming' && (
                 <TouchableOpacity
@@ -695,21 +720,22 @@ const RdieDetails = ({ route }) => {
                 //#endregion
               }
 
-
-              {rideStatus == "Completed" &&
-                //#region  when ride complete rider download the recipt
-                <TouchableOpacity
-                  // onPress={() => setCancelRide(true)}
-                  style={{
-                    width: '90%',
-                    borderTopWidth: 1,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    borderColor: colors.placeholderColor,
-                    marginBottom: moderateScale(10),
-                  }}>
-                  <Text14 mt={moderateScale(10)} text={'Download Receipt'} />
-                </TouchableOpacity>
+              {
+                rideStatus == 'Completed' && (
+                  //#region  when ride complete rider download the recipt
+                  <TouchableOpacity
+                    // onPress={() => setCancelRide(true)}
+                    style={{
+                      width: '90%',
+                      borderTopWidth: 1,
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      borderColor: colors.placeholderColor,
+                      marginBottom: moderateScale(10),
+                    }}>
+                    <Text14 mt={moderateScale(10)} text={'Download Receipt'} />
+                  </TouchableOpacity>
+                )
                 //#endregion
               }
 

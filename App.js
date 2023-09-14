@@ -17,11 +17,15 @@ import Onboarding from './src/screens/onboarding/Onboarding';
 import AuthRoutes from './src/routes/AuthRoutes';
 import {useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import Loader from './src/component/modal/Loader';
+import { requestLocationPermission } from './src/utils/Permssion';
 
 export default function App() {
   const {stackName} = useSelector(state => state.ChangeStackReducer);
   const [modalVisible, setModalVisible] = useState(false);
   const [active, setActive] = useState(null);
+  const {modalStatus}=useSelector((state)=>state.modalReducer)
+
   const carouselData = [
     {id: 1, text: 'Item 1'},
     {id: 2, text: 'Item 2'},
@@ -30,6 +34,7 @@ export default function App() {
 
   useEffect(() => {
     SplashScreen.hide();
+    requestLocationPermission()
   }, []);
 
   LogBox.ignoreAllLogs();
@@ -44,6 +49,8 @@ export default function App() {
         {stackName == 'MAIN' && <MainRoutes />}
         {stackName == 'ONBOARDING' && <Onboarding />}
         {stackName == 'AUTH' && <AuthRoutes />}
+        {/* {modalStatus&&} */}
+        {modalStatus&&<Loader/>}
       </NavigationContainer>
     </>
   );
