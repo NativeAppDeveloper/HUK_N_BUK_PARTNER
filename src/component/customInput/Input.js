@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { colors, fonts } from '../../utils/Styles'
 import { moderateScale, scale } from 'react-native-size-matters'
@@ -7,10 +7,20 @@ export default function Input({
   placeHolder,
   mt,
   value,
-  onChangeText
+  onChangeText,
+  editable,
+  // onPressIn,
+  onPress,
+  disabled,
+  keyboardType,
+  maxLength,
+  onFocus
 }) {
   return (
-    <View style={{
+    <TouchableOpacity 
+    disabled={disabled}
+    onPress={onPress}
+    style={{
       width: '100%',
       backgroundColor: colors.white,
       paddingHorizontal: scale(10),
@@ -23,13 +33,20 @@ export default function Input({
       }),
       borderWidth:1,
       borderColor:colors.borderC,
+      // paddingRight:moderateScale(20)
       // paddingVertical:moderateScale(5)
     }}>
       <TextInput
+      // onPressIn={onPressIn}
+      keyboardType={keyboardType?'number-pad':'default'}
+      multiline={true}
+      editable={editable}
       value={value}
+      onFocus={onFocus}
       onChangeText={onChangeText}
-       style={{fontFamily:fonts.medium,color:colors.black}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
-    </View>
+      maxLength={maxLength}
+       style={{fontFamily:fonts.medium,color:colors.black,width:'95%'}} placeholderTextColor={colors.placeholderColor} placeholder={placeHolder} />
+    </TouchableOpacity>
   )
 }
 

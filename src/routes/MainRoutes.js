@@ -1,5 +1,5 @@
-import {Platform, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {Platform, Image, AppState} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -67,6 +67,10 @@ import AssignVechicle from '../screens/main/myBids/AssignVechicle';
 import AssignVechicleInformation from '../screens/main/myBids/AssignVechicleInformation';
 import RoundTripDetails from '../screens/main/myBids/RoundTripDetails';
 import Wallet from '../screens/main/wallet/Wallet';
+import EditVehicle from '../screens/main/vechicle/EditVehicle';
+import {useFocusEffect} from '@react-navigation/native';
+import {setDriverStatusServices} from '../services/Services';
+import GooglePlacesInput from '../screens/common/GooglePlacesInput';
 // import MyBids from '../screens/main/myBids/MyBids';
 
 const Drawer = createDrawerNavigator();
@@ -219,10 +223,58 @@ const DrawerStack = () => {
 };
 
 const MainRoutes = () => {
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  const driverStatus = async () => {
+    try {
+      let response = await setDriverStatusServices();
+      console.log('seucees',response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+      }
+
+      // driverStatus()
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+
+      if (appState.current == 'active') {
+        driverStatus();
+      } else {
+        driverStatus();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+      // console.log('app is close')
+    };
+  }, []);
+
+  useEffect(() => {
+    // 'first'
+
+    return () => {
+      console.log('sachin');
+    };
+  }, []);
+
   return (
     <>
       <Stack.Navigator
         initialRouteName="DrawerStack"
+        // initialRouteName="GooglePlacesInput"
         screenOptions={{
           headerShown: false,
         }}>
@@ -296,14 +348,24 @@ const MainRoutes = () => {
         <Stack.Screen name="MyBidRideDetails" component={MyBidRideDetails} />
 
         <Stack.Screen name="AssignVechicle" component={AssignVechicle} />
-        <Stack.Screen name="AssignVechicleInformation" component={AssignVechicleInformation} />
+        <Stack.Screen
+          name="AssignVechicleInformation"
+          component={AssignVechicleInformation}
+        />
         <Stack.Screen name="RoundTripDetails" component={RoundTripDetails} />
 
-        
         <Stack.Screen name="Wallet" component={Wallet} />
 
+        <Stack.Screen name="EditVehicle" component={EditVehicle} />
+
+        <Stack.Screen name="GooglePlacesInput" component={GooglePlacesInput} />
+
+
         
-          {/* route */}
+
+        {/* route */}
+
+        {/* EditVehicle */}
 
         {/* Upload Pollution Documnet */}
 

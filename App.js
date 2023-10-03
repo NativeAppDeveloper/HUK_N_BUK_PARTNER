@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import {
+  AppState,
   Image,
   LogBox,
   Modal,
@@ -10,21 +11,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect, useRef, useState} from 'react';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import MainRoutes from './src/routes/MainRoutes';
 import Onboarding from './src/screens/onboarding/Onboarding';
 import AuthRoutes from './src/routes/AuthRoutes';
 import {useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import Loader from './src/component/modal/Loader';
-import { requestLocationPermission } from './src/utils/Permssion';
+import {requestLocationPermission} from './src/utils/Permssion';
 
 export default function App() {
   const {stackName} = useSelector(state => state.ChangeStackReducer);
   const [modalVisible, setModalVisible] = useState(false);
   const [active, setActive] = useState(null);
-  const {modalStatus}=useSelector((state)=>state.modalReducer)
+  const {modalStatus} = useSelector(state => state.modalReducer);
 
   const carouselData = [
     {id: 1, text: 'Item 1'},
@@ -34,10 +35,13 @@ export default function App() {
 
   useEffect(() => {
     SplashScreen.hide();
-    requestLocationPermission()
+    requestLocationPermission();
   }, []);
 
   LogBox.ignoreAllLogs();
+
+ 
+
   return (
     <>
       <StatusBar
@@ -50,7 +54,7 @@ export default function App() {
         {stackName == 'ONBOARDING' && <Onboarding />}
         {stackName == 'AUTH' && <AuthRoutes />}
         {/* {modalStatus&&} */}
-        {modalStatus&&<Loader/>}
+        {modalStatus && <Loader />}
       </NavigationContainer>
     </>
   );

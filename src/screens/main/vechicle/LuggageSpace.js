@@ -17,12 +17,56 @@ import {useNavigation} from '@react-navigation/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {MinusIcon, PlusIcon} from 'react-native-heroicons/solid';
 import Text12 from '../../../component/customText/Text12';
+import { addDriverServices, addVehicleServices } from '../../../services/Services';
+import { vechicleId } from '../../../utils/localVariable';
 
 const LuggageSpace = ({route}) => {
   const [step, setStep] = useState(1);
   const navigation = useNavigation();
   const paramData = route?.params?.item;
-  const [prefrence,setPrefrence]=useState(1)
+  const [prefrence, setPrefrence] = useState(1);
+  const [luggageDetails, setLuggageDetails] = useState({
+    smallLuggage: 0,
+    mediumLuggage: 0,
+    largeLuggage: 0,
+  });
+  
+
+  const onValueAddChange = name => {
+    setLuggageDetails(pre => ({
+      ...pre,
+      [name]: pre[name] + 1,
+    }));
+  };
+
+  console.log(luggageDetails);
+
+  const onValueMinusChange = (name, val) => {
+    setLuggageDetails(pre => ({
+      ...pre,
+      [name]: pre[name] > 0 ? pre[name] - 1 : 0,
+    }));
+  };
+
+
+  const addOnwerDetails=async()=>{
+    let objToSend={
+      smallLuggage:luggageDetails.smallLuggage,
+      mediumLuggage:luggageDetails.mediumLuggage,
+      largeLuggage:luggageDetails.largeLuggage,
+      vehicleId:vechicleId._id,
+      is_luggage_detail:true
+    }
+    
+    try {
+      let response = await addVehicleServices(objToSend)
+      console.log(response.data);
+      navigation.navigate('AddVechicle', {flow: 1})
+    } catch (error) {
+       console.log(error);
+    }
+  }
+
   return (
     <SafeAreaView>
       <View style={{width: '90%', alignSelf: 'center'}}>
@@ -65,6 +109,7 @@ const LuggageSpace = ({route}) => {
                         marginTop: moderateScale(20),
                       }}>
                       <TouchableOpacity
+                        onPress={() => onValueMinusChange('smallLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -76,10 +121,14 @@ const LuggageSpace = ({route}) => {
                         <MinusIcon color={colors.black} />
                       </TouchableOpacity>
                       <View style={{marginHorizontal: scale(15)}}>
-                        <Text24 text={1} fonts={fonts.bold} />
+                        <Text24
+                          text={luggageDetails.smallLuggage}
+                          fonts={fonts.bold}
+                        />
                       </View>
 
                       <TouchableOpacity
+                        onPress={() => onValueAddChange('smallLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -105,6 +154,7 @@ const LuggageSpace = ({route}) => {
                         marginTop: moderateScale(20),
                       }}>
                       <TouchableOpacity
+                        onPress={() => onValueMinusChange('mediumLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -116,10 +166,14 @@ const LuggageSpace = ({route}) => {
                         <MinusIcon color={colors.black} />
                       </TouchableOpacity>
                       <View style={{marginHorizontal: scale(15)}}>
-                        <Text24 text={1} fonts={fonts.bold} />
+                        <Text24
+                          text={luggageDetails.mediumLuggage}
+                          fonts={fonts.bold}
+                        />
                       </View>
 
                       <TouchableOpacity
+                        onPress={() => onValueAddChange('mediumLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -145,6 +199,7 @@ const LuggageSpace = ({route}) => {
                         marginTop: moderateScale(20),
                       }}>
                       <TouchableOpacity
+                        onPress={() => onValueMinusChange('largeLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -156,10 +211,14 @@ const LuggageSpace = ({route}) => {
                         <MinusIcon color={colors.black} />
                       </TouchableOpacity>
                       <View style={{marginHorizontal: scale(15)}}>
-                        <Text24 text={1} fonts={fonts.bold} />
+                        <Text24
+                          text={luggageDetails.largeLuggage}
+                          fonts={fonts.bold}
+                        />
                       </View>
 
                       <TouchableOpacity
+                        onPress={() => onValueAddChange('largeLuggage')}
                         style={{
                           height: moderateScale(35),
                           width: moderateScale(35),
@@ -178,28 +237,49 @@ const LuggageSpace = ({route}) => {
 
               {
                 //#region  carrer Carrier Preference:
-                <View style={{marginTop:moderateScale(30)}}>
-                    <Text14 text={'Carrier Preference:'}/>
+                <View style={{marginTop: moderateScale(30)}}>
+                  <Text14 text={'Carrier Preference:'} />
 
-                    <View style={{flexDirection:'row',alignItems:'center',marginTop:moderateScale(20)}}>
-                        <TouchableOpacity 
-                        onPress={()=>setPrefrence(1)}
-                        style={{flexDirection:'row',alignItems:'center'}}>
-                            <View style={{height:22,width:22}}>
-                            <Image style={CommonStyle.img}  source={prefrence==1?icon.off:icon.on}/>
-                            </View>
-                            <Text12 color={colors.secondry} text={'   With Carrier'}/>
-                        </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: moderateScale(20),
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => setPrefrence(1)}
+                      style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <View style={{height: 22, width: 22}}>
+                        <Image
+                          style={CommonStyle.img}
+                          source={prefrence == 1 ? icon.off : icon.on}
+                        />
+                      </View>
+                      <Text12
+                        color={colors.secondry}
+                        text={'   With Carrier'}
+                      />
+                    </TouchableOpacity>
 
-                        <TouchableOpacity 
-                        onPress={()=>setPrefrence(2)}
-                        style={{flexDirection:'row',alignItems:'center',marginLeft:moderateScale(20)}}>
-                            <View style={{height:22,width:22}}>
-                            <Image style={CommonStyle.img}  source={prefrence==2?icon.off:icon.on}/>
-                            </View>
-                            <Text12 color={colors.secondry} text={'   Without Carrier'}/>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                      onPress={() => setPrefrence(2)}
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginLeft: moderateScale(20),
+                      }}>
+                      <View style={{height: 22, width: 22}}>
+                        <Image
+                          style={CommonStyle.img}
+                          source={prefrence == 2 ? icon.off : icon.on}
+                        />
+                      </View>
+                      <Text12
+                        color={colors.secondry}
+                        text={'   Without Carrier'}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 //#endregion
               }
@@ -208,7 +288,10 @@ const LuggageSpace = ({route}) => {
                 //#region  Next Button
                 <View style={{marginBottom: moderateScale(80)}}>
                   <Button
-                    onPress={() => navigation.navigate('AddVechicle',{flow:1})}
+                    onPress={() =>
+                      addOnwerDetails()
+                      // navigation.navigate('AddVechicle', {flow: 1})
+                    }
                     width={'100%'}
                     mt={moderateVerticalScale(55)}
                     text={'Next'}

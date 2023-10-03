@@ -42,3 +42,22 @@ export const paddingTopFun=()=>{
   export const sucessTost= (msg)=>{
     return  toastShow(msg,colors.green)
   } 
+
+
+  export const checkArray=(arr)=>{
+    if(arr==undefined||arr.length==0||arr==null){
+        return false
+    }
+    else{
+        return true
+    }
+}
+
+export const isValidObject=(obj)=> {
+    if(obj!==null && obj!==undefined && Object.keys(obj).length>0){
+        return true
+    }
+    else{
+        return false
+    }
+  }

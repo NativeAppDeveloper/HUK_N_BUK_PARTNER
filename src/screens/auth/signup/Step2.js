@@ -75,7 +75,7 @@ const Step2 = () => {
     }
     signupData.state=stateName,
     signupData.city=selectedCity
-    navigation.navigate('Step3')
+    navigation.navigate('Step5')
     }
 
   useEffect(() => {

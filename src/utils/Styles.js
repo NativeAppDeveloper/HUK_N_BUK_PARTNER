@@ -17,7 +17,8 @@ export const colors={
     blue:'#70A6E8',
     orange:'#F7954A',
     lightGreen:'#E8FFEE',
-    darkGray:'#D9D9D9'
+    darkGray:'#D9D9D9',
+    lightGray:'#F0F0F3'
 }
 
 export const fonts={

@@ -26,7 +26,7 @@ import {
 import {icon} from '../../utils/Image';
 import {errorTost, sucessTost} from '../../utils/Helper';
 
-const VerifyOtp = ({route, navigation}) => {
+const EmailOtp = ({route, navigation}) => {
   // const navigation = useNavigation();
   const paramData = route?.params?.flow;
   const mobile = route?.params?.mobile;
@@ -99,8 +99,7 @@ const VerifyOtp = ({route, navigation}) => {
     };
     try {
       let response = await getOtpFromMobileServices(payLoad);
-      sucessTost('123456')
-      // sucessTost(response?.data?.user?.otp)
+      sucessTost(response?.data?.user?.otp)
       
       // console.log(response.data);
     } catch (error) {
@@ -224,11 +223,11 @@ const VerifyOtp = ({route, navigation}) => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                if (signUpFlow.flow == 'email') {
-                  navigation.navigate('Step4');
-                } else {
+                // if (signUpFlow.flow == 'email') {
+                //   navigation.navigate('Step4');
+                // } else {
                   navigation.goBack();
-                }
+                // }
               }}>
               <View
                 style={{
@@ -327,4 +326,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VerifyOtp;
+export default EmailOtp;

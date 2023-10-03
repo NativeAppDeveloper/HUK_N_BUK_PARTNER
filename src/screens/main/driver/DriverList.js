@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, Image, ScrollView, Platform} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BackHandler from '../../../component/BackHandler';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -15,6 +15,7 @@ import Text10 from '../../../component/customText/Text10';
 import {StarIcon} from 'react-native-heroicons/solid';
 import Button from '../../../component/customButton/Button';
 import {iphone8, width} from '../../../utils/Helper';
+import { assignDriverServices, getDriverListServices } from '../../../services/Services';
 
 const DriverList = ({route}) => {
   const navigation = useNavigation();
@@ -32,6 +33,39 @@ const DriverList = ({route}) => {
      return moderateScale(25)
     }
   } 
+
+
+  const driverList=async()=>{
+    try {
+      let response = await getDriverListServices()
+      console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  const assignDriver = async () => {
+    let objToSend = {
+      vehicleId: '',
+      driverId: '',
+      is_intercity: true, 
+      is_rental: true, 
+      is_outstation: true, 
+      is_online: true, 
+    };
+    try {
+      let response = await assignDriverServices(objToSend);
+      console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    driverList()
+  }, [])
+  
   // console.log(paramData,'=-=-=');
   return (
     <View style={{flex: 1}}>
@@ -136,7 +170,7 @@ const DriverList = ({route}) => {
             paddingVertical: moderateScale(15),
             paddingBottom: moderateScale(25),
           }}>
-          <Button text={'Assign'} />
+          <Button onPress={assignDriver} text={'Assign'} />
         </View>
       )}
     </View>

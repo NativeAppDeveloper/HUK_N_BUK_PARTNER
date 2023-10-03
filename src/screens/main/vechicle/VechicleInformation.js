@@ -17,37 +17,52 @@ import Text16 from '../../../component/customText/Text16';
 import Text12 from '../../../component/customText/Text12';
 import {icon} from '../../../utils/Image';
 import Text14 from '../../../component/customText/Text14';
+import moment from 'moment';
+import { changeVehicleStatusService } from '../../../services/Services';
+import FastImage from 'react-native-fast-image'
 
 const VechicleInformation = ({route}) => {
   const navigation = useNavigation();
-  const paramData=route?.params?.flow
+  const paramData = route?.params?.flow;
+  const item = route?.params?.item;
 
-  console.log(paramData,'hehehehe');
+  const [vechicleStatus,setVechicleStatus]=useState({
+    main:item?.is_online,
+    intercity:false,
+    outsation:false,
+    rental:false
+  })
+
+  console.log(item, 'hehehehe');
   const [toggle, setToggle] = useState(false);
   const vechicleDetails = [
     {
       doc: 'RC Details',
       docDesc: 'Registration Certificate Number',
-      docNumber: '65465165165FSA54',
-      expiry: '10/09/2023',
+      docNumber: item?.rcNumber,
+      expiry: moment(item?.rcExpireDate).format('DD/MM/YYYY'),
+      docImg: item?.rcCertificate,
     },
     {
       doc: 'Insurance Details',
       docDesc: 'Insurance Number',
-      docNumber: '65465165165FSA54',
-      expiry: '10/09/2023',
+      docNumber: item?.insuranceNumber,
+      expiry: moment(item?.insuranceExpireDate).format('DD/MM/YYYY'),
+      docImg: item?.insuranceCertificate,
     },
     {
       doc: 'Permit Details',
       docDesc: 'Permit Number',
-      docNumber: '65465165165FSA54',
-      expiry: '10/09/2023',
+      docNumber: item?.permitNumber,
+      expiry: moment(item?.permitExpireDate).format('DD/MM/YYYY'),
+      docImg: item?.permitCertificate,
     },
     {
       doc: 'Pollution Details',
       docDesc: 'Pollution Number',
-      docNumber: '65465165165FSA54',
-      expiry: '10/09/2023',
+      docNumber: item?.pollutionNumber,
+      expiry: moment(item?.pollutionExpireDate).format('DD/MM/YYYY'),
+      docImg: item?.permitCertificate,
     },
   ];
 
@@ -55,6 +70,19 @@ const VechicleInformation = ({route}) => {
     // const newData = [...notifactionData];
     // newData[index].enabled = !newData[index].enabled;
     // setNotifactionData(newData);
+  };
+
+  const changeVehicleStatus = async (item, ind) => {
+    let objToSend = {
+      vehicleId: item?._id,
+      status:!vechicleStatus.is_online,
+    };
+    try {
+      let response = await changeVehicleStatusService(objToSend);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
   return (
     <View style={{flex: 1}}>
@@ -100,9 +128,10 @@ const VechicleInformation = ({route}) => {
               />
 
               <Text16
-                text={'Nandita Sachdeva'}
+                text={`${item?.firstName} ${item?.lastName}`}
                 color={colors.theme}
                 fontFamily={fonts.regular}
+                textTransform={'capitalize'}
               />
             </View>
           </View>
@@ -179,113 +208,136 @@ const VechicleInformation = ({route}) => {
                         color={colors.secondry}
                         fontFamily={fonts.regular}
                       />
-                      <Image
+                      <FastImage 
+                        source={{
+                          uri:ele.docImg,
+                          priority: FastImage.priority.high,
+                      }}
+
+                      style={{
+                        height: moderateScale(40),
+                        width: moderateScale(40),
+                        marginTop: moderateScale(10),
+                      }}
+                      />
+                      {/* <Image
                         resizeMode="contain"
                         style={{
                           height: moderateScale(40),
                           width: moderateScale(40),
                           marginTop: moderateScale(10),
                         }}
-                        source={{uri:'https://etimg.etb2bimg.com/thumb/92831648.cms?width=400&height=300'}}
-                      />
+                        source={{uri: ele.docImg}}
+                      /> */}
                     </View>
                   </View>
                 </TouchableOpacity>
               );
             })}
             {/* driver detaisl */}
-           {!paramData&& <View
-              style={{
-                paddingHorizontal: moderateScale(10),
-                backgroundColor: colors.white,
-                paddingVertical: moderateScale(20),
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: moderateScale(10),
-              }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {!paramData && (
+              <View
+                style={{
+                  paddingHorizontal: moderateScale(10),
+                  backgroundColor: colors.white,
+                  paddingVertical: moderateScale(20),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: moderateScale(10),
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Image
+                    style={{
+                      height: moderateScale(30),
+                      width: moderateScale(30),
+                    }}
+                    resizeMode="contain"
+                    source={icon.profile}
+                  />
+                  <View style={{marginLeft: 10}}>
+                    <Text12
+                      fontFamily={fonts.regular}
+                      color={colors.secondry}
+                      text={'Assigned Driver'}
+                    />
+                    <Text12
+                      fontFamily={fonts.bold}
+                      color={colors.theme}
+                      text={'Akshit Kumar'}
+                    />
+                  </View>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('VechicleInformation')}
+                    style={{
+                      backgroundColor: colors.theme,
+                      paddingVertical: moderateScale(7),
+                      paddingHorizontal: scale(20),
+                      borderRadius: 8,
+                      alignItems: 'center',
+                    }}>
+                    <Text12 mt={1} color={colors.white} text={'View Details'} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('VechicleInformation')}
+                    style={{
+                      //   backgroundColor: colors.theme,
+                      paddingVertical: moderateScale(7),
+                      paddingHorizontal: scale(20),
+                      borderRadius: 8,
+                      marginTop: moderateScale(10),
+                    }}>
+                    <Text12
+                      mt={1}
+                      color={colors.theme}
+                      text={'Remove Driver'}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
+            {/* assign driver */}
+
+            {paramData && (
+              <View
+                style={{
+                  paddingHorizontal: moderateScale(10),
+                  backgroundColor: colors.yellow,
+                  paddingVertical: moderateScale(7),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginTop: moderateScale(10),
+                }}>
                 <Image
                   style={{height: moderateScale(30), width: moderateScale(30)}}
                   resizeMode="contain"
-                  source={icon.profile}
+                  source={icon.diverIcon}
                 />
-                <View style={{marginLeft: 10}}>
-                  <Text12
-                    fontFamily={fonts.regular}
-                    color={colors.secondry}
-                    text={'Assigned Driver'}
-                  />
-                  <Text12
-                    fontFamily={fonts.bold}
-                    color={colors.theme}
-                    text={'Akshit Kumar'}
-                  />
-                </View>
-              </View>
-              <View>
+                <Text12
+                  fontFamily={fonts.bold}
+                  color={colors.theme}
+                  text={'Driver not assigned yet'}
+                />
+
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('VechicleInformation')}
+                  onPress={() =>
+                    navigation.navigate('DriverList', {flow: 'assign'})
+                  }
                   style={{
                     backgroundColor: colors.theme,
                     paddingVertical: moderateScale(7),
                     paddingHorizontal: scale(20),
                     borderRadius: 8,
-                    alignItems: 'center',
                   }}>
-                  <Text12 mt={1} color={colors.white} text={'View Details'} />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('VechicleInformation')}
-                  style={{
-                    //   backgroundColor: colors.theme,
-                    paddingVertical: moderateScale(7),
-                    paddingHorizontal: scale(20),
-                    borderRadius: 8,
-                    marginTop: moderateScale(10),
-                  }}>
-                  <Text12 mt={1} color={colors.theme} text={'Remove Driver'} />
+                  <Text12 mt={1} color={colors.white} text={'Assign Driver'} />
                 </TouchableOpacity>
               </View>
-            </View>}
-
-            {/* assign driver */}
-
-            {paramData&&<View
-              style={{
-                paddingHorizontal: moderateScale(10),
-                backgroundColor: colors.yellow,
-                paddingVertical: moderateScale(7),
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop:moderateScale(10)
-              }}>
-              <Image
-                style={{height: moderateScale(30), width: moderateScale(30)}}
-                resizeMode="contain"
-                source={icon.diverIcon}
-              />
-              <Text12
-                fontFamily={fonts.bold}
-                color={colors.theme}
-                text={'Driver not assigned yet'}
-              />
-
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('DriverList', {flow: 'assign'})
-                }
-                style={{
-                  backgroundColor: colors.theme,
-                  paddingVertical: moderateScale(7),
-                  paddingHorizontal: scale(20),
-                  borderRadius: 8,
-                }}>
-                <Text12 mt={1} color={colors.white} text={'Assign Driver'} />
-              </TouchableOpacity>
-            </View>}
+            )}
 
             {/* vechile status */}
             <View
@@ -313,10 +365,10 @@ const VechicleInformation = ({route}) => {
 
                   <Switch
                     trackColor={{false: '#767577', true: colors.green}}
-                    thumbColor={toggle ? colors.placeholderColor : '#f4f3f4'}
+                    thumbColor={vechicleStatus.main ? colors.placeholderColor : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => setToggle(!toggle)}
-                    value={toggle}
+                    value={vechicleStatus.main}
                   />
                 </View>
 

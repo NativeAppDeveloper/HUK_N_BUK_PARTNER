@@ -12,20 +12,28 @@ import Step5 from '../screens/auth/signup/Step5';
 import RegistrationComplete from '../screens/auth/signup/RegistrationComplete';
 import BussinessDetails from '../screens/auth/signup/BussinessDetails';
 import LoginOtp from '../screens/auth/LoginOtp';
+import GooglePlacesInput from '../screens/common/GooglePlacesInput';
+import { useSelector } from 'react-redux';
+import EmailOtp from '../screens/auth/EmailOtp';
 
 const Stack = createNativeStackNavigator();
 
 const AuthRoutes = () => {
+    const {screenName}=useSelector((state)=>state.setIntialScreenAuthReducres)
+    console.log(screenName,'screenName');
+
     return (
         <Stack.Navigator
-            initialRouteName="Login"
+        // initialRouteName='BussinessDetails'
+            initialRouteName={!screenName?"Login":"Step1"}
             screenOptions={{
                 headerShown: false,
             }}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="LoginOtp" component={LoginOtp} />
 
-            
+            <Stack.Screen name="EmailOtp" component={EmailOtp} />
+
             <Stack.Screen name="Otp" component={VerifyOtp} />
             <Stack.Screen name="Step1" component={Step1} />
             <Stack.Screen name="Step2" component={Step2} />
@@ -34,7 +42,8 @@ const AuthRoutes = () => {
             <Stack.Screen name="Step5" component={Step5} />
             <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} />
             <Stack.Screen name="BussinessDetails" component={BussinessDetails} />
-
+            <Stack.Screen name="GooglePlacesInput" component={GooglePlacesInput} />
+            
         </Stack.Navigator>
     )
 }

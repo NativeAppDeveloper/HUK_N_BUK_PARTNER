@@ -15,7 +15,7 @@ const toastShow=(message,type,color)=>{
         delay: 0,
         textStyle:{
             fontSize:moderateScale(14),
-            fontFamily:fonts.medium
+            fontFamily:fonts.regular
         },
         
         backgroundColor:type,

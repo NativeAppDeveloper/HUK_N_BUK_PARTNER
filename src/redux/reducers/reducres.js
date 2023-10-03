@@ -27,3 +27,19 @@ export const modalReducer=((state=modalData,action)=>{
         return state;
     }
 })
+
+
+const initialRoute={
+    screenName:false
+}
+
+export const setIntialScreenAuthReducres=((state=initialRoute,action)=>{
+    // console.log(action,'=-=-=-=q-we=qwe');
+    switch(action.type){
+        case "AUTH_INITIAL":
+            // state. = ;
+            return { ...state,screenName:action.payload};
+        default: 
+        return state;
+    }
+})

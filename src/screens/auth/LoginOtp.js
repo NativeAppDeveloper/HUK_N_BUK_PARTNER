@@ -7,7 +7,7 @@ import {
   scale,
 } from 'react-native-size-matters';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Alert} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Text24 from '../../component/customText/Text24';
 import Text14 from '../../component/customText/Text14';
@@ -16,19 +16,25 @@ import SignupSeteps from '../../component/common/SignupSeteps';
 import Button from '../../component/customButton/Button';
 import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { signUpFlow, signupData } from '../../utils/localVariable';
-import { getOtpFromEmailServices, verifyEmailOtpServices } from '../../services/Services';
+import {signUpFlow, signupData} from '../../utils/localVariable';
+import {
+  getLoginOtpServices,
+  getOtpFromEmailServices,
+  loginVerifiyServices,
+  verifyEmailOtpServices,
+} from '../../services/Services';
+import {setData} from '../../services/AsyncServices';
+import { closeLoader, showLoader } from '../../utils/Helper';
 
 const LoginOtp = ({route}) => {
   const navigation = useNavigation();
-  const paramData=route?.params?.flow
-  const mobile=route?.params?.mobile
+  const paramData = route?.params?.flow;
+  const mobile = route?.params?.mobile;
   const dispatch = useDispatch();
 
+  console.log(signUpFlow, 'yess');
 
-  console.log(signUpFlow,'yess')
-  
-  console.log(mobile)
+  console.log(mobile);
   const btnHandler = () => {
     dispatch({
       type: 'CHANGE_STACK',
@@ -45,64 +51,68 @@ const LoginOtp = ({route}) => {
   const [seconds, setSeconds] = useState(10);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
-
-  const getOtpFormEmail=async()=>{
-    let payLoad= {
-      email:signupData.email
-    }
-      try {
-        let response = await getOtpFromEmailServices(payLoad)
-        console.log(response.data,'got ir');
-        // console.log(response.data);
-      } catch (error) {
-        console.log(error,'-0-0-0-');
-      }
-  }
-
-
-
-
-  const handleEmailotp=async()=>{
-    let payload={
-      email:signupData.email,
-      code:enterOtp
-    }
+  const getOtpFormEmail = async () => {
+    console.log('1234');
+    let payLoad = {
+      phoneNumber: mobile,
+    };
     try {
-      let response = await verifyEmailOtpServices(payload)
-      console.log(response.data);
-      navigation.navigate('BussinessDetails')
+      let response = await getLoginOtpServices(payLoad);
+      console.log(response.data, 'got ir');
+      // console.log(response.data);
+    } catch (error) {
+      console.log(error, '-0-0-0-');
+    }
+  };
+
+  const handleEmailotp = async () => {
+    dispatch(showLoader)
+    let payload = {
+      phoneNumber: mobile,
+      otp: '123456',
+    };
+    try {
+      let response = await loginVerifiyServices(payload);
+      console.log(response.data, 'yessssssss');
+      setData('token',response.data.token)
+      dispatch(closeLoader)
+      dispatch({
+        type: 'CHANGE_STACK',
+        payload: 'MAIN',
+      });
       console.log(response);
     } catch (error) {
-      console.log(error)
+      dispatch(closeLoader)
+      console.log(error);
     }
-  }
+  };
 
-
-  
-
-
+  useEffect(() => {
+    if (isFocused) {
+      getOtpFormEmail();
+    }
+  }, [isFocused]);
 
   // timer start
-    // timer start
-    useEffect(() => {
-      if (isFocused) {
-          let interval = null;
-          if (isTimerRunning) {
-              interval = setInterval(() => {
-                  setSeconds((seconds) => {
-                      if (seconds === 0) {
-                          clearInterval(interval);
-                          setIsTimerRunning(false);
-                          return 10;
-                      }
-                      return seconds - 1;
-                  });
-              }, 1000);
-          }
-          return () => clearInterval(interval);
-      }
-  }, [isTimerRunning, isFocused]);
-
+  // timer start
+  //   useEffect(() => {
+  //     if (isFocused) {
+  //         let interval = null;
+  //         if (isTimerRunning) {
+  //             interval = setInterval(() => {
+  //                 setSeconds((seconds) => {
+  //                     if (seconds === 0) {
+  //                         clearInterval(interval);
+  //                         setIsTimerRunning(false);
+  //                         return 10;
+  //                     }
+  //                     return seconds - 1;
+  //                 });
+  //             }, 1000);
+  //         }
+  //         return () => clearInterval(interval);
+  //     }
+  // }, [isTimerRunning, isFocused]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -126,7 +136,7 @@ const LoginOtp = ({route}) => {
             }}
             pinCount={6}
             // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-            // onCodeChanged = {code => { this.setState({code})}}
+            onCodeChanged={code => setEnterOtp(code)}
             autoFocusOnLoad={openFlag}
             codeInputFieldStyle={styles.underlineStyleBase}
             codeInputHighlightStyle={styles.underlineStyleHighLighted}
@@ -134,21 +144,18 @@ const LoginOtp = ({route}) => {
               setEnterOtp(code);
               console.log(`Code is ${code}, you are good to go!`);
             }}
+            // clearInputs={}
           />
           <Button
             onPress={() => {
-                dispatch({
-                  type:'CHANGE_STACK',
-                  payload:'MAIN'
-                })
-              
+              handleEmailotp();
             }}
             width={'100%'}
             mt={moderateVerticalScale(20)}
             text={'Verify'}
           />
           <View>
-            <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text14
                 textAlign={'center'}
                 mt={25}
@@ -187,5 +194,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default LoginOtp
+export default LoginOtp;

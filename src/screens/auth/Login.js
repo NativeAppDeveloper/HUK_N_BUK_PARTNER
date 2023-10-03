@@ -37,7 +37,7 @@ const Login = ({route}) => {
 
   const SubmitHandler=async()=>{
 
-    navigation.navigate('Otp', {mobile:mobile})
+    // navigation.navigate('Otp', {mobile:mobile})
 
     if(mobile==""){
       errorTost('Please enter mobile number')
@@ -61,10 +61,10 @@ const Login = ({route}) => {
       let response = await checkPhoneEmailSercvies(payload)
       console.log(response.data)
       // return
-    // navigation.navigate('Otp', {flow: paramData,mobile:mobile})
+    navigation.navigate('LoginOtp', {flow: paramData,mobile:mobile})
 
     } catch (error) {
-      navigation.navigate('Otp', {flow: paramData,mobile:mobile})
+      // navigation.navigate('LoginOtp', {flow: paramData,mobile:mobile})
 
       console.log(error.response.data,'checkPhoneEmailSercvies')
     }

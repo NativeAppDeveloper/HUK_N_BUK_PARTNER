@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TextInput, Platform, } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import BackHandler from '../../../component/BackHandler'
 import { moderateScale, scale } from 'react-native-size-matters'
@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CustomDropDown from '../../../component/common/CustomDropDown'
 import Button from '../../../component/customButton/Button'
 import { icon } from '../../../utils/Image'
+import { myProfileDetailsServices } from '../../../services/Services'
 
 const MyProfile = () => {
     const [edit, setEdit] = useState(false)
@@ -27,6 +28,29 @@ const MyProfile = () => {
             [field]: value,
         }));
     };
+
+
+    const myProfileDetails=async()=>{
+        try {
+           let response = await myProfileDetailsServices()
+           let userInfo=response?.data?.activeUser
+           setProfileData(pre=>({
+            ...pre,
+            firstName:userInfo?.firstName,
+            lastName:userInfo?.lastName,
+            mobileNumber:userInfo?.phoneNumber,
+            
+           }))
+           console.log(response.data,'user ka data');
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        myProfileDetails()
+    }, [])
+    
 
 
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Dimensions, Text, ImageBackground, Image } from 'react-native';
+import { View, ScrollView, StyleSheet, Dimensions, Text, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { images } from '../../utils/Image';
 import { CommonStyle, colors, fonts } from '../../utils/Styles';
 import { moderateScale, scale } from 'react-native-size-matters';
@@ -46,6 +46,20 @@ const CustomCarousel = () => {
             payload:'AUTH'
         })
     }
+
+
+  const registerHandler = () => {
+    dispatch({
+      type: 'AUTH_INITIAL',
+      payload: true,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: 'CHANGE_STACK',
+        payload: 'AUTH',
+      });
+    }, 100);
+  };
 
     return (
         <ImageBackground
@@ -107,11 +121,13 @@ const CustomCarousel = () => {
                 bottom: moderateScale(35)
             }}>
                 <Button text={'Login'} onPress={()=>btnHandler()} />
-                <View style={{ flexDirection: 'row', alignSelf: "center", marginTop: moderateScale(15) }}>
+                <TouchableOpacity 
+                onPress={()=>registerHandler()}
+                style={{ flexDirection: 'row', alignSelf: "center", marginTop: moderateScale(15) }}>
                     <Text14 fontFamily={fonts.regular} colors={colors.secondry} text={'New user ? '} />
                     <Text14 text={' Register here'} />
 
-                </View>
+                </TouchableOpacity>
             </View>
         </ImageBackground>
     );

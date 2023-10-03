@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, Image, Keyboard} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   moderateScale,
@@ -17,14 +17,16 @@ import {useNavigation} from '@react-navigation/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import UploadModal from '../../../component/modal/UploadModal';
 import {signupServices} from '../../../services/Services';
-import { signupData } from '../../../utils/localVariable';
+import {signupData} from '../../../utils/localVariable';
 
-const BussinessDetails = () => {
+const BussinessDetails = ({route}) => {
   const [step, setStep] = useState(1);
   const navigation = useNavigation();
   const [uploadModal, setUploadModal] = useState(false);
   const [url, setUrl] = useState('');
+  const [padding,setPadding] = useState(10);
   const [type, setType] = useState('');
+  const paramData = route?.params?.location;
 
   const [bussinessDetails, setBussinessDetails] = useState({
     bussinessName: '',
@@ -36,6 +38,23 @@ const BussinessDetails = () => {
     panCard: '',
   });
 
+
+  // useEffect(()=>{
+  //   let subs = Keyboard.addListener("keyboardDidShow",(event)=>{
+  //     setPadding(event.endCoordinates.height);
+  //     console.log("event",event.endCoordinates.height);
+  //   })
+
+  //   let subs2 = Keyboard.addListener("keyboardDidHide",(event)=>{
+  //     setPadding(10);
+  //     console.log("event",event.endCoordinates.height);
+  //   })
+
+  //   return()=>{
+  //     subs,
+  //     subs2
+  //   };
+  // },[])
   console.log(bussinessDetails);
 
   const onChangeHandler = (name, val) => {
@@ -45,36 +64,54 @@ const BussinessDetails = () => {
     }));
   };
 
-  console.log(signupData)
+  console.log(signupData);
 
   const signUpHandeler = async () => {
-    
     let payLoad = {
       vehicleCategoryId: signupData.vehicleCategoryId,
-      firstName:signupData.step1.firstName,
-      city:signupData.city,
-      state:signupData.state,
-      lastName:signupData.step1.lastName,
-      phoneNumber:signupData.mobile,
-      businessName:bussinessDetails.bussinessName,
-      location:'lslslslslslslslss',
-      email:'sac123@gmai.com',
-      businessAddress: 'Sachin',
-      gstNumber: 'sgtnumber',
+      firstName: signupData.step1.firstName,
+      city: signupData.city,
+      state: signupData.state,
+      lastName: signupData.step1.lastName,
+      phoneNumber: signupData.mobile,
+      businessName: bussinessDetails.bussinessName,
+      location: bussinessDetails.location,
+      email: signupData.email,
+      businessAddress:bussinessDetails.bussinessAddress,
+      gstNumber:bussinessDetails.gstNumber,
       gstCertificate: bussinessDetails.gstCertificate,
-      panNumber: '1223333',
-      panCertificate:bussinessDetails.panCard,
+      panNumber: bussinessDetails.panCardNumber,
+      panCertificate: bussinessDetails.panCard,
     };
+
+    console.log(payLoad);
     try {
       let response = await signupServices(payLoad);
-      console.log(response.data)
-      navigation.navigate('RegistrationComplete')
-      console.log('i  am don')
+      console.log(response.data);
+      navigation.navigate('RegistrationComplete');
+      console.log('i  am don');
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
+  useEffect(() => {
+    if (paramData !== undefined) {
+      setBussinessDetails(pre => ({
+        ...pre,
+        location:paramData.place,
+      }));
+    }
+  }, [paramData]);
+
+
+
+  const reff = useRef(null);
+
+
+  const onFocusPan=()=>{
+    reff?.current.scrollToEnd()
+  }
   const imageHandler = () => {};
   return (
     <SafeAreaView>
@@ -86,8 +123,12 @@ const BussinessDetails = () => {
         }
 
         <KeyboardAwareScrollView
+        ref={reff}
+          // extraScrollHeight={300}
+          extraHeight={300}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: moderateScale(100)}}>
+          // contentContainerStyle={{paddingBottom:padding}}
+          >
           <View>
             {
               //#region  headet text
@@ -102,21 +143,24 @@ const BussinessDetails = () => {
               //#endregion
             }
 
-            <View style={{alignSelf: 'center', width: '100%'}}>
+            <View style={{alignSelf: 'center', width: '100%' ,}}>
               {
                 //#region Name Components
                 <View style={{width: '100%'}}>
                   <Input
                     value={bussinessDetails.name}
-                    onChangeText={(val) => onChangeHandler('bussinessName', val)}
+                    onChangeText={val => onChangeHandler('bussinessName', val)}
                     placeHolder={'Busines Name'}
                     mt={moderateVerticalScale(20)}
                   />
 
                   <View style={{}}>
                     <Input
+                      value={bussinessDetails.location}
+                      onPress={() => navigation.navigate('GooglePlacesInput')}
                       placeHolder={'Location'}
                       mt={moderateVerticalScale(25)}
+                      editable={false}
                     />
                     <Image
                       style={{
@@ -134,7 +178,7 @@ const BussinessDetails = () => {
 
                   <Input
                     value={bussinessDetails.bussinessAddress}
-                    onChangeText={(val) =>
+                    onChangeText={val =>
                       onChangeHandler('bussinessAddress', val)
                     }
                     placeHolder={'Business Address'}
@@ -143,7 +187,7 @@ const BussinessDetails = () => {
 
                   <Input
                     value={bussinessDetails.gstNumber}
-                    onChangeText={(val) => onChangeHandler('gstNumber', val)}
+                    onChangeText={val => onChangeHandler('gstNumber', val)}
                     placeHolder={'GST Number'}
                     mt={moderateVerticalScale(20)}
                   />
@@ -191,9 +235,10 @@ const BussinessDetails = () => {
 
                   <Input
                     value={bussinessDetails.panCardNumber}
-                    onChangeText={(val) => onChangeHandler('panCardNumber', val)}
+                    onChangeText={val => onChangeHandler('panCardNumber', val)}
                     placeHolder={'PAN Card Number '}
                     mt={moderateVerticalScale(20)}
+                    onFocus={onFocusPan}
                   />
 
                   <View
@@ -242,7 +287,7 @@ const BussinessDetails = () => {
 
               {
                 //#region  Next Button
-                <View style={{marginBottom: moderateScale(80)}}>
+                <View style={{marginBottom: moderateScale(130)}}>
                   <Button
                     onPress={() => signUpHandeler()}
                     width={'100%'}

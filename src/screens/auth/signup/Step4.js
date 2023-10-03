@@ -46,7 +46,7 @@ const Step4 = () => {
       if (error.response.data.code == 401) {
         signupData.email = email;
         signUpFlow.flow = 'email';
-        navigation.navigate('Otp', {flow: 'email'});
+        navigation.navigate('EmailOtp', {flow: 'email'});
       }
       console.log(error.response.data, 'step4');
     }
