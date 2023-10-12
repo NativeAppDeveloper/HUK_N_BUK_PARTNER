@@ -19,7 +19,7 @@ export const DocumentsUpload = async(file) => {
     obj= response.body
 
   });
-
+  
   return obj
 
 };

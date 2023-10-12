@@ -1,11 +1,12 @@
 // import axios  from "./xios";
 
-import axios from 'axios';
+// import axios from 'axios';
 import {BASE_URL} from '../utils/Urls';
 import {getData} from './AsyncServices';
-// import axios from "./Axios";
+import axios from "./Axios";
 
 const getAxiosHeader = token => {
+  console.log(token,';l;l;l;');
   return {
     headers: {
       'Content-Type': 'application/json',
@@ -101,6 +102,7 @@ export const vechicleListServices = async () => {
 
 export const getDriverListServices = async () => {
   let token = await getData('token');
+  console.log(token);
   let url = `${BASE_URL}driverList`;
   return await axios.get(url, getAxiosHeader(token));
 };
@@ -108,7 +110,7 @@ export const getDriverListServices = async () => {
 export const assignDriverServices = async body => {
   let token = await getData('token');
   let url = `${BASE_URL}assignDriver`;
-  return await axios.post(url, body, getAxiosHeader(token));
+  return await axios.patch(url, body, getAxiosHeader(token));
 };
 
 export const setDriverStatusServices = async () => {
@@ -121,4 +123,17 @@ export const changeVehicleStatusService = async body => {
   let token = await getData('token');
   let url = `${BASE_URL}vehicleStatus`;
   return await axios.patch(url, body, getAxiosHeader(token));
+};
+
+export const editProfileServices = async body => {
+  let token = await getData('token');
+  let url = `${BASE_URL}editProfile`;
+  return await axios.put(url, body, getAxiosHeader(token));
+};
+
+export const deleteVehicleServices = async body => {
+  let token = await getData('token');
+  console.log(token,'token');
+  let url = `${BASE_URL}deleteVehicle`;
+  return await axios.delete(url,getAxiosHeader(token), body);
 };

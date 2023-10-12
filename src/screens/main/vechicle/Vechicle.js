@@ -11,7 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {checkArray, iphone8} from '../../../utils/Helper';
+import {checkArray, iphone8, sucessTost} from '../../../utils/Helper';
 import {
   moderateScale,
   moderateVerticalScale,
@@ -25,32 +25,41 @@ import Text12 from '../../../component/customText/Text12';
 import Text14 from '../../../component/customText/Text14';
 import {
   changeVehicleStatusService,
+  deleteVehicleServices,
   vechicleListServices,
 } from '../../../services/Services';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import NoData from '../../../component/common/NoData';
+import DeleteModal from '../../../component/modal/DeleteModal';
 
 const Vechicle = () => {
   const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const isFocused = useIsFocused();
+  const [isLoding, setIsLoading] = useState(false);
   const [initalState, setInitialState] = useState({
     vechicleList: null,
+    deleteModal: false,
+    vechicleId: null,
   });
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   };
 
   const vechicleList = async () => {
+    setIsLoading(true);
     try {
       let response = await vechicleListServices();
-      // alert(';s')
       console.log(response.data.askedData, 'mera data');
       setInitialState(pre => ({
         ...pre,
         vechicleList: response?.data?.askedData,
       }));
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error.response);
     }
   };
@@ -74,7 +83,21 @@ const Vechicle = () => {
     }
   };
 
-  // alert('dd')
+  const deleteVehicleHadler = async () => {
+    let payLoad = {
+      vehicleId: initalState.vechicleId,
+    };
+    console.log(payLoad);
+    try {
+      let response = await deleteVehicleServices(payLoad);
+      // console.log(response.data);
+      sucessTost('Vechicle Delete Sucessfully');
+      vechicleListServices();
+      setDeleteModal(false);
+    } catch (error) {
+      console.log('EROOR---->', error?.response?.data ?? error?.message);
+    }
+  };
 
   useEffect(() => {
     if (isFocused) {
@@ -103,7 +126,7 @@ const Vechicle = () => {
         </TouchableOpacity>
       </View>
 
-      {!checkArray(initalState.vechicleList) &&
+      {isLoding &&
         [1, 1, 1, 1, 1].map((data, ind) => {
           return (
             <SkeletonPlaceholder
@@ -123,9 +146,21 @@ const Vechicle = () => {
 
       <FlatList
         data={initalState.vechicleList}
+        ListEmptyComponent={() => {
+          return (
+            <View
+              style={{
+                height: moderateScale(500),
+                width: '100%',
+                justifyContent: 'center',
+              }}>
+              <NoData name={'No Vechicle Found'} />
+            </View>
+          );
+        }}
         keyExtractor={item => item?._id}
         renderItem={({item, index}) => {
-          // console.log(item)
+          console.log(item, index);
           return (
             <View style={styles.vehicleContainer}>
               <View
@@ -162,22 +197,26 @@ const Vechicle = () => {
 
               <View style={styles.vehicleInfo}>
                 <View style={styles.vehicleImageContainer}>
-                  <View style={styles.vehicleImage}>
+                  <View
+                    style={[
+                      styles.vehicleImage,
+                      {overflow: 'hidden', borderRadius: 100},
+                    ]}>
                     <Image
-                      resizeMode="contain"
+                      resizeMode="stretch"
                       style={CommonStyle.img}
-                      source={icon.car2}
+                      source={
+                        item?.vehiclePhoto
+                          ? {uri: item?.vehiclePhoto}
+                          : icon.car1
+                      }
                     />
                   </View>
                 </View>
 
                 <View style={styles.box}>
                   <View>
-                    <Text14
-                      mt={1}
-                      color={colors.theme}
-                      text={'UP-78-DY-8451'}
-                    />
+                    <Text14 mt={1} color={colors.theme} text={item?.rcNumber} />
                     <Text12
                       mt={1}
                       color={colors.placeholderColor}
@@ -194,7 +233,15 @@ const Vechicle = () => {
                       <Image style={CommonStyle.img} source={images.edit1} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.delete}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setDeleteModal(true);
+                        setInitialState(pre => ({
+                          ...pre,
+                          vechicleId: item?._id,
+                        }));
+                      }}
+                      style={styles.delete}>
                       <Image style={CommonStyle.img} source={images.trash} />
                     </TouchableOpacity>
                   </View>
@@ -212,29 +259,91 @@ const Vechicle = () => {
                 </View>
               </View>
 
-              <View style={styles.driverLocation}>
-                <Image
-                  style={styles.ddd}
-                  resizeMode="contain"
-                  source={icon.diverIcon}
-                />
-                <Text12
-                  fontFamily={fonts.bold}
-                  color={colors.theme}
-                  text={'Driver not assigned yet'}
-                />
+              {!item?.is_assign && (
+                <View style={styles.driverLocation}>
+                  <Image
+                    style={styles.ddd}
+                    resizeMode="contain"
+                    source={icon.diverIcon}
+                  />
+                  <Text12
+                    fontFamily={fonts.bold}
+                    color={colors.theme}
+                    text={'Driver not assigned yet'}
+                  />
 
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('VechicleInformation', {
-                      flow: '1',
-                      item: item,
-                    })
-                  }
-                  style={styles.assignbth}>
-                  <Text12 mt={1} color={colors.white} text={'Assign Driver'} />
-                </TouchableOpacity>
-              </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('VechicleInformation', {
+                        flow: '1',
+                        item: item,
+                      })
+                    }
+                    style={styles.assignbth}>
+                    <Text12
+                      mt={1}
+                      color={colors.white}
+                      text={'Assign Driver'}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {item?.is_assign && (
+                <View
+                  style={{
+                    paddingHorizontal: moderateScale(10),
+                    backgroundColor: colors.white,
+                    paddingVertical: moderateScale(10),
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        height: moderateScale(30),
+                        width: moderateScale(30),
+                        borderRadius: 100,
+                        overflow: 'hidden',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        style={{height: '90%', width: '90%'}}
+                        resizeMode="contain"
+                        source={images.userIcon}
+                      />
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                      <Text12
+                        fontFamily={fonts.regular}
+                        color={colors.secondry}
+                        text={'Assigned Driver'}
+                      />
+                      <Text12
+                        fontFamily={fonts.bold}
+                        color={colors.theme}
+                        text={`${item?.driverId?.firstName} ${item?.driverId?.lastName}`}
+                      />
+                    </View>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('VechicleInformation', {item: item})
+                    }
+                    style={{
+                      backgroundColor: colors.theme,
+                      paddingVertical: moderateScale(7),
+                      paddingHorizontal: scale(10),
+                      borderRadius: 8,
+                    }}>
+                    <Text12 mt={1} color={colors.white} text={'View Details'} />
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           );
         }}
@@ -454,6 +563,13 @@ const Vechicle = () => {
           </TouchableOpacity>
         </View>
       </View> */}
+
+      <DeleteModal
+        type={'Vechicle'}
+        deleteHandler={deleteVehicleHadler}
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+      />
     </>
   );
 };

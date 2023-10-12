@@ -74,13 +74,13 @@ const AddVechicle = ({route}) => {
                   </View>
                   <View style={{marginLeft:10}}>
                   <Text16 color={colors.theme} mt={1} text={ele.name} />
-                 {paramData&& <Text12 fontFamily={fonts.regular} color={ind%2==0?colors.green:colors.red}  text={ind%2==0?'Completed':'Incomplete'}/>}
+                 {paramData&& <Text12 fontFamily={fonts.regular} color={true?colors.green:colors.red}  text={true?'Completed':'Incomplete'}/>}
 
                   </View>
                 </View>
                   <View>
                     {
-                      paramData?<Image resizeMode='contain' style={{height:18,width:18}} source={ind%2==0?require('../../../assets/verify.png'):require('../../../assets/red.png')}/>:
+                      paramData?<Image resizeMode='contain' style={{height:18,width:18}} source={true?require('../../../assets/verify.png'):require('../../../assets/red.png')}/>:
                 <ChevronRightIcon color={colors.placeholderColor} />
                     }
 
@@ -90,11 +90,12 @@ const AddVechicle = ({route}) => {
           })}
 
           <Button
+          disabled={!paramData?true:false}
             onPress={() => {
-              navigation.navigate('VechicleDetails');
+              navigation.navigate('Vehicles');
             }}
             mt={moderateScale(40)}
-            backgroundColor={'#d9d9d9'}
+            backgroundColor={paramData?colors.yellow:'#d9d9d9'}
             text={'Add Vehicle'}
           />
         </View>

@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {images} from '../../utils/Image';
 import {XMarkIcon} from 'react-native-heroicons/solid';
@@ -17,12 +17,16 @@ import {moderateScale, scale} from 'react-native-size-matters';
 import Text14 from '../../component/customText/Text14';
 import Text18 from '../../component/customText/Text18';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { myProfileDetailsServices } from '../../services/Services';
 
 const DrawerScreen = props => {
   // const navigation=useNavigation()
   const {width, height} = useWindowDimensions('screen');
   const dispatch = useDispatch();
+  const [name,setName]=useState('Name')
+  const [profilePic,setProfilePic]=useState('')
+  const {userData}=useSelector((state)=>state.userDataReducers)
 
   const drawerData = {
     first: [
@@ -85,6 +89,7 @@ const DrawerScreen = props => {
         name: 'AboutApp',
         title: 'Privacy Policy',
       },
+      
       // {
       //     name: 'Faq',
       //     title: 'FAQ’s'
@@ -95,6 +100,29 @@ const DrawerScreen = props => {
   const navigationHandler = (name, title) => {
     props.navigation.navigate(name, {screen: title});
   };
+
+
+
+
+  const myProfileDetails=async()=>{
+    try {
+       let response = await myProfileDetailsServices()
+       let userInfo=response?.data?.activeUser
+      //  setName(`${response?.data?.activeUser.firstName} ${response?.data?.activeUser.lastName}`)
+       dispatch({
+        type:'USER_PROFILE',
+        payload:response.data.activeUser
+      })
+    } catch (error) {
+        console.log(error.response.data)
+    }
+}
+
+console.log(userData,'userDataReducers');
+
+useEffect(() => {
+  myProfileDetails()
+}, [])
 
   const logoutHandler = () => {
     dispatch({
@@ -132,11 +160,12 @@ const DrawerScreen = props => {
                         <View style={styles.imageName}>
                           <View style={styles.imageNameInner}>
                             <Image
-                              style={[CommonStyle.img]}
-                              source={images.registrationComplete}
+                            resizeMode='contain'
+                            style={[CommonStyle.img, {borderRadius: 100,},!userData.profilePic&&{tintColor:colors.white}]}
+                            source={!userData?.profilePic?images.userIcon:{uri:userData.profilePic}}
                             />
                           </View>
-                          <Text18 color={colors.theme} text={'  Sachin'} />
+                          <Text18 numberOfLines={1} color={colors.theme} text={`  ${userData?.firstName} ${userData?.lastName}`} />
                         </View>
                       )}
                       {drawerData[item].map((data, index) => {
@@ -222,12 +251,17 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(10),
     paddingHorizontal: scale(10),
     borderColor: colors.placeholderColor,
+    borderWidth:1
   },
   imageNameInner: {
     height: moderateScale(60),
     width: moderateScale(60),
     borderRadius: moderateScale(60),
     overflow: 'hidden',
+    borderWidth:1,
+    backgroundColor:'#dadada',
+    borderColor:colors.gray
+
   },
 });
 

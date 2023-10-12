@@ -172,14 +172,14 @@ const CustomMapView = props => {
           </Marker>
         ))}
 
-        <MapViewDirections
+        {/* <MapViewDirections
           origin={origin}
           destination={destination}
           apikey="AIzaSyDhp3DOJ8SCTdSaij3f6kgF9QyVkH5JW8g"
           strokeWidth={4}
           strokeColor="blue"
           mode="DRIVING"
-        />
+        /> */}
       </MapView>
     </View>
   );

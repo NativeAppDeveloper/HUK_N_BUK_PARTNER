@@ -10,6 +10,7 @@ import {ChevronRightIcon} from 'react-native-heroicons/solid';
 import Button from '../../../component/customButton/Button';
 import {useNavigation} from '@react-navigation/native';
 import Text12 from '../../../component/customText/Text12';
+import { vechicleId } from '../../../utils/localVariable';
 
 const EditVehicle = ({route}) => {
   const navigation = useNavigation();
@@ -17,50 +18,56 @@ const EditVehicle = ({route}) => {
 
 
 
-  console.log(paramData,'paramData')
+  console.log(paramData,'hhhhhhhhhhhh')
 
   const [vechicleDetails, setVechicleDetails] = useState([
     {
       name: 'Owner Details',
       screen:'VechicleDetails',
-      status:false
+      status:paramData.is_owner_detail
     },
     {
       name: 'RC Details',
       screen:'RcDetails',
-      status:false
+      status:paramData?.is_rc_detail
     },
     {
       name: 'Insurance Details',
-      screen:'InsuranceDetails'
+      screen:'InsuranceDetails',
+      status:paramData?.is_insurence_detail
     },
     {
       name: 'Permit Details',
-      screen:'PermitDetails'
+      screen:'PermitDetails',
+      status:paramData?.is_permit_detail
     },
     {
       name: 'Pollution Details',
-      screen:'PollutionDetails'
+      screen:'PollutionDetails',
+      status:paramData?.is_pollution_detail
 
     },
     {
       name: 'Luggage Allowance',
-      screen:'LuggageSpace'
+      screen:'LuggageSpace',
+      status:paramData?.is_luggage_detail
     },
   ]);
 
   return (
     <View>
-      <BackHandler name={'Add New Vehicle'} />
+      <BackHandler name={'Edit  Vehicle'} />
 
       {
         //#region  vechole list
         <View>
           {vechicleDetails.map((ele, ind) => {
+            // console.log(ele);
             return (
               <TouchableOpacity 
               onPress={() => {
                 navigation.navigate(ele.screen,{item:ele});
+                vechicleId._id=paramData?._id
               }}
               style={styles.card}>
                 <View style={styles.cardInner}>
@@ -78,13 +85,13 @@ const EditVehicle = ({route}) => {
                   </View>
                   <View style={{marginLeft:10}}>
                   <Text16 color={colors.theme} mt={1} text={ele.name} />
-                 {paramData&& <Text12 fontFamily={fonts.regular} color={ind%2==0?colors.green:colors.red}  text={ind%2==0?'Completed':'Incomplete'}/>}
+                 {paramData&& <Text12 fontFamily={fonts.regular} color={ele?.status?colors.green:colors.red}  text={ele?.status?'Completed':'Incomplete'}/>}
 
                   </View>
                 </View>
                   <View>
                     {
-                      paramData?<Image resizeMode='contain' style={{height:18,width:18}} source={ind%2==0?require('../../../assets/verify.png'):require('../../../assets/red.png')}/>:
+                      paramData?<Image resizeMode='contain' style={{height:18,width:18}} source={ele?.status?require('../../../assets/verify.png'):require('../../../assets/red.png')}/>:
                 <ChevronRightIcon color={colors.placeholderColor} />
                     }
 

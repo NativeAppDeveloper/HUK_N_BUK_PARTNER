@@ -18,13 +18,15 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import UploadModal from '../../../component/modal/UploadModal';
 import {signupServices} from '../../../services/Services';
 import {signupData} from '../../../utils/localVariable';
+import {setData} from '../../../services/AsyncServices';
+import {errorTost, isValidGSTNo, validatePANNumber} from '../../../utils/Helper';
 
 const BussinessDetails = ({route}) => {
   const [step, setStep] = useState(1);
   const navigation = useNavigation();
   const [uploadModal, setUploadModal] = useState(false);
   const [url, setUrl] = useState('');
-  const [padding,setPadding] = useState(10);
+  const [padding, setPadding] = useState(10);
   const [type, setType] = useState('');
   const paramData = route?.params?.location;
 
@@ -37,7 +39,6 @@ const BussinessDetails = ({route}) => {
     panCardNumber: '',
     panCard: '',
   });
-
 
   // useEffect(()=>{
   //   let subs = Keyboard.addListener("keyboardDidShow",(event)=>{
@@ -55,7 +56,42 @@ const BussinessDetails = ({route}) => {
   //     subs2
   //   };
   // },[])
-  console.log(bussinessDetails);
+  // console.log(bussinessDetails);
+
+  const validation = () => {
+    if (bussinessDetails.bussinessName == '') {
+      errorTost('Please Enter Bussiness Name ');
+      return;
+    }
+    if (bussinessDetails.location == '') {
+      errorTost('Please Enter Location');
+    }
+    if (bussinessDetails.bussinessAddress == '') {
+      errorTost('Please Enter Business Address');
+      return;
+    }
+    if (bussinessDetails.gstNumber == '') {
+      errorTost('Please Enter GST Number');
+      return;
+    }
+    if (!isValidGSTNo) {
+      errorTost('Please Enter Valid GST Numner');
+      return;
+    }
+    if (bussinessDetails.gstCertificate == '') {
+      errorTost('Please Upload GST Certificate');
+      return;
+    }
+    if (!validatePANNumber) {
+      errorTost('Please Enter Valid Pan Numner');
+      return;
+    }
+    if (bussinessDetails.gstCertificate == '') {
+      errorTost('Please Pan Card GST Certificate');
+      return;
+    }
+    signUpHandeler()
+  };
 
   const onChangeHandler = (name, val) => {
     setBussinessDetails(pre => ({
@@ -68,7 +104,7 @@ const BussinessDetails = ({route}) => {
 
   const signUpHandeler = async () => {
     let payLoad = {
-      vehicleCategoryId: signupData.vehicleCategoryId,
+      // vehicleCategoryId: signupData.vehicleCategoryId,
       firstName: signupData.step1.firstName,
       city: signupData.city,
       state: signupData.state,
@@ -77,8 +113,8 @@ const BussinessDetails = ({route}) => {
       businessName: bussinessDetails.bussinessName,
       location: bussinessDetails.location,
       email: signupData.email,
-      businessAddress:bussinessDetails.bussinessAddress,
-      gstNumber:bussinessDetails.gstNumber,
+      businessAddress: bussinessDetails.bussinessAddress,
+      gstNumber: bussinessDetails.gstNumber,
       gstCertificate: bussinessDetails.gstCertificate,
       panNumber: bussinessDetails.panCardNumber,
       panCertificate: bussinessDetails.panCard,
@@ -87,7 +123,8 @@ const BussinessDetails = ({route}) => {
     console.log(payLoad);
     try {
       let response = await signupServices(payLoad);
-      console.log(response.data);
+      setData('token', response.data.token);
+      // return
       navigation.navigate('RegistrationComplete');
       console.log('i  am don');
     } catch (error) {
@@ -99,19 +136,16 @@ const BussinessDetails = ({route}) => {
     if (paramData !== undefined) {
       setBussinessDetails(pre => ({
         ...pre,
-        location:paramData.place,
+        location: paramData.place,
       }));
     }
   }, [paramData]);
 
-
-
   const reff = useRef(null);
 
-
-  const onFocusPan=()=>{
-    reff?.current.scrollToEnd()
-  }
+  const onFocusPan = () => {
+    reff?.current.scrollToEnd();
+  };
   const imageHandler = () => {};
   return (
     <SafeAreaView>
@@ -123,12 +157,12 @@ const BussinessDetails = ({route}) => {
         }
 
         <KeyboardAwareScrollView
-        ref={reff}
+          ref={reff}
           // extraScrollHeight={300}
           extraHeight={300}
           showsVerticalScrollIndicator={false}
           // contentContainerStyle={{paddingBottom:padding}}
-          >
+        >
           <View>
             {
               //#region  headet text
@@ -143,7 +177,7 @@ const BussinessDetails = ({route}) => {
               //#endregion
             }
 
-            <View style={{alignSelf: 'center', width: '100%' ,}}>
+            <View style={{alignSelf: 'center', width: '100%'}}>
               {
                 //#region Name Components
                 <View style={{width: '100%'}}>
@@ -289,7 +323,7 @@ const BussinessDetails = ({route}) => {
                 //#region  Next Button
                 <View style={{marginBottom: moderateScale(130)}}>
                   <Button
-                    onPress={() => signUpHandeler()}
+                    onPress={() => validation()}
                     width={'100%'}
                     mt={moderateVerticalScale(45)}
                     text={'Next'}

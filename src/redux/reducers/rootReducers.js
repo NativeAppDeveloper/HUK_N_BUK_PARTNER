@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ChangeStackReducer, modalReducer, setIntialScreenAuthReducres } from './reducres';
+import { ChangeStackReducer, modalReducer, setIntialScreenAuthReducres, userDataReducers } from './reducres';
 // import  { ManagewelcomeScreen,ChangeStackReducer, changeUserType } from './stackReducers';
 // import { getUserLocationReducer, modalReducer, myProfileReducer } from './commonReducers';
 
@@ -7,5 +7,6 @@ import { ChangeStackReducer, modalReducer, setIntialScreenAuthReducres } from '.
 export default combineReducers({
     ChangeStackReducer:ChangeStackReducer,
     modalReducer:modalReducer,
-    setIntialScreenAuthReducres:setIntialScreenAuthReducres
+    setIntialScreenAuthReducres:setIntialScreenAuthReducres,
+    userDataReducers:userDataReducers
 });

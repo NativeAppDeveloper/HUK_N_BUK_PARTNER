@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, Image, ScrollView, Platform} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import BackHandler from '../../../component/BackHandler';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused, useNavigation} from '@react-navigation/native';
 import {
   moderateScale,
   moderateVerticalScale,
@@ -14,14 +14,21 @@ import Text14 from '../../../component/customText/Text14';
 import Text10 from '../../../component/customText/Text10';
 import {StarIcon} from 'react-native-heroicons/solid';
 import Button from '../../../component/customButton/Button';
-import {iphone8, width} from '../../../utils/Helper';
+import {checkArray, closeLoader, errorTost, iphone8, showLoader, sucessTost, width} from '../../../utils/Helper';
 import { assignDriverServices, getDriverListServices } from '../../../services/Services';
+import { useDispatch } from 'react-redux';
 
 const DriverList = ({route}) => {
   const navigation = useNavigation();
   const paramData = route?.params?.flow;
   const [selectedIndex,setSelectedIndex]=useState(null)
+  const [driverListData,setDriverListData]=useState(null)
+  const [driverid,setDriverId]=useState(null)
+  const isFocused=useIsFocused()
+  const Id=route?.params?.id
+  const dispatch=useDispatch()
 
+  console.log(Id);
   const paddingTopFun=()=>{
     if(Platform.OS=='ios'&& !iphone8){
      return moderateScale(60)
@@ -30,7 +37,7 @@ const DriverList = ({route}) => {
     return  moderateScale(25)
     }
     else{
-     return moderateScale(25)
+     return moderateScale(50)
     }
   } 
 
@@ -38,33 +45,47 @@ const DriverList = ({route}) => {
   const driverList=async()=>{
     try {
       let response = await getDriverListServices()
-      console.log(response.data)
+      setDriverListData(response?.data?.askedData)
+      // console.log(response.data)
     } catch (error) {
       console.log(error);
     }
   }
 
 
-  const assignDriver = async () => {
+  const assignDriver = async (id) => {
+  
+    if(driverid==null){
+      errorTost('Please Select Driver')
+      return
+    }
     let objToSend = {
-      vehicleId: '',
-      driverId: '',
+      vehicleId:Id,
+      driverId:driverid,
       is_intercity: true, 
       is_rental: true, 
       is_outstation: true, 
       is_online: true, 
     };
+
+    dispatch(showLoader)
     try {
       let response = await assignDriverServices(objToSend);
-      console.log(response.data)
+      dispatch(closeLoader)
+      sucessTost('Vechicle Assign Sucessfully')
+      navigation.navigate('Vehicles')
+
     } catch (error) {
-      console.log(error);
+      dispatch(closeLoader)
+      console.log(error?.response?.data);
     }
   }
 
   useEffect(() => {
-    driverList()
-  }, [])
+    if(isFocused){
+      driverList()
+    }
+  }, [isFocused])
   
   // console.log(paramData,'=-=-=');
   return (
@@ -86,10 +107,10 @@ const DriverList = ({route}) => {
       )}
       <ScrollView contentContainerStyle={{paddingBottom: moderateScale(200)}}>
         <View style={{marginTop: moderateScale(20)}}>
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1].map((ele, ind) => {
+          {checkArray(driverListData)&&driverListData.map((ele, ind) => {
             return (
               <TouchableOpacity
-              onPress={()=>setSelectedIndex(ind)}
+              onPress={()=>{setSelectedIndex(ind);setDriverId(ele._id)}}
                 // onPress={() => navigation.navigate('My Request')}
                 key={ind}
                 style={{
@@ -116,10 +137,11 @@ const DriverList = ({route}) => {
                     width: moderateScale(50),
                     borderWidth: 1,
                     borderRadius: 40,
+                    overflow:'hidden'
                   }}>
                   <Image
-                    source={icon.profile}
-                    resizeMode="contain"
+                    source={ele?.profilePic?{uri:ele?.profilePic}:icon.profile}
+                    resizeMode="cover"
                     style={CommonStyle.img}
                   />
                 </TouchableOpacity>
@@ -129,7 +151,7 @@ const DriverList = ({route}) => {
                     <Text14
                       color={colors.theme}
                       mt={1}
-                      text={'Akshit Kumar •'}
+                      text={`${ele?.firstName} ${ele?.lastName} •`}
                     />
                     <View
                       style={{

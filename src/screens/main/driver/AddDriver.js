@@ -22,7 +22,7 @@ import {icon} from '../../../utils/Image';
 import SignupSeteps from '../../../component/common/SignupSeteps';
 import {useNavigation} from '@react-navigation/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {closeLoader, errorTost, showLoader, width} from '../../../utils/Helper';
+import {closeLoader, errorTost, showLoader, sucessTost, width} from '../../../utils/Helper';
 import Validator from '../../../utils/Validator';
 import {
   addDriverServices,
@@ -66,6 +66,8 @@ const AddDriver = () => {
       let response = await addDriverServices(driverDetails);
       console.log(response.data);
       dispatch(closeLoader);
+      sucessTost('Driver Add Sucessfully')
+      navigation.goBack()
     } catch (error) {
       dispatch(closeLoader);
       errorTost(error.response.data.message);
@@ -140,7 +142,7 @@ const AddDriver = () => {
                     onChangeText={val => onChangeHandler('phoneNumber', val)}
                     keyboardType="number-pad"
                     maxLength={10}
-                    placeholderTextColor={colors.placeholderColor2223}
+                    placeholderTextColor={colors.placeholderColor}
                     placeholder="  Contact Number"
                     style={{
                       fontFamily: fonts.medium,

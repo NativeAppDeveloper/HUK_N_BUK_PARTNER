@@ -12,26 +12,28 @@ import {CommonStyle, colors, fonts} from '../../../utils/Styles';
 import {moderateScale, scale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
 import {UserIcon} from 'react-native-heroicons/solid';
-import {commonPadding} from '../../../utils/Helper';
+import {commonPadding, sucessTost} from '../../../utils/Helper';
 import Text16 from '../../../component/customText/Text16';
 import Text12 from '../../../component/customText/Text12';
-import {icon} from '../../../utils/Image';
+import {icon, images} from '../../../utils/Image';
 import Text14 from '../../../component/customText/Text14';
 import moment from 'moment';
-import { changeVehicleStatusService } from '../../../services/Services';
-import FastImage from 'react-native-fast-image'
+import {changeVehicleStatusService, deleteVehicleServices} from '../../../services/Services';
+import FastImage from 'react-native-fast-image';
+import DeleteModal from '../../../component/modal/DeleteModal';
 
 const VechicleInformation = ({route}) => {
   const navigation = useNavigation();
   const paramData = route?.params?.flow;
   const item = route?.params?.item;
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  const [vechicleStatus,setVechicleStatus]=useState({
-    main:item?.is_online,
-    intercity:false,
-    outsation:false,
-    rental:false
-  })
+  const [vechicleStatus, setVechicleStatus] = useState({
+    main: item?.is_online,
+    intercity: false,
+    outsation: false,
+    rental: false,
+  });
 
   console.log(item, 'hehehehe');
   const [toggle, setToggle] = useState(false);
@@ -75,7 +77,7 @@ const VechicleInformation = ({route}) => {
   const changeVehicleStatus = async (item, ind) => {
     let objToSend = {
       vehicleId: item?._id,
-      status:!vechicleStatus.is_online,
+      status: !vechicleStatus.is_online,
     };
     try {
       let response = await changeVehicleStatusService(objToSend);
@@ -84,6 +86,26 @@ const VechicleInformation = ({route}) => {
       console.log(error.response.data);
     }
   };
+
+
+  const deleteVehicleHadler = async () => {
+    let payLoad = {
+      vehicleId:item?._id,
+    };
+    console.log(payLoad);
+    try {
+      let response = await deleteVehicleServices(payLoad);
+      console.log(response.data);
+      sucessTost('Vechicle Delete Sucessfully');
+      // vechicleListServices();
+      navigation.goBack()
+      setDeleteModal(false);
+    } catch (error) {
+      console.log('EROOR---->', error?.response?.data ?? error?.message);
+    }
+  };
+
+  console.log(paramData, 'paddingBottom');
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity
@@ -208,17 +230,16 @@ const VechicleInformation = ({route}) => {
                         color={colors.secondry}
                         fontFamily={fonts.regular}
                       />
-                      <FastImage 
+                      <FastImage
                         source={{
-                          uri:ele.docImg,
+                          uri: ele.docImg,
                           priority: FastImage.priority.high,
-                      }}
-
-                      style={{
-                        height: moderateScale(40),
-                        width: moderateScale(40),
-                        marginTop: moderateScale(10),
-                      }}
+                        }}
+                        style={{
+                          height: moderateScale(40),
+                          width: moderateScale(40),
+                          marginTop: moderateScale(10),
+                        }}
                       />
                       {/* <Image
                         resizeMode="contain"
@@ -246,28 +267,32 @@ const VechicleInformation = ({route}) => {
                   justifyContent: 'space-between',
                   marginTop: moderateScale(10),
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    style={{
-                      height: moderateScale(30),
-                      width: moderateScale(30),
-                    }}
-                    resizeMode="contain"
-                    source={icon.profile}
-                  />
-                  <View style={{marginLeft: 10}}>
-                    <Text12
-                      fontFamily={fonts.regular}
-                      color={colors.secondry}
-                      text={'Assigned Driver'}
+                {item?.driverId && (
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{borderWidth:1,borderRadius:100,overflow:'hidden'}}>
+                    <Image
+                      style={{
+                        height: moderateScale(30),
+                        width: moderateScale(30),
+                      }}
+                      resizeMode="contain"
+                      source={images.userIcon}
                     />
-                    <Text12
-                      fontFamily={fonts.bold}
-                      color={colors.theme}
-                      text={'Akshit Kumar'}
-                    />
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                      <Text12
+                        fontFamily={fonts.regular}
+                        color={colors.secondry}
+                        text={'Assigned Driver'}
+                      />
+                      <Text12
+                        fontFamily={fonts.bold}
+                        color={colors.theme}
+                        text={`${item?.driverId?.firstName} ${item?.driverId?.lastName}`}
+                      />
+                    </View>
                   </View>
-                </View>
+                )}
                 <View>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('VechicleInformation')}
@@ -326,7 +351,10 @@ const VechicleInformation = ({route}) => {
 
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('DriverList', {flow: 'assign'})
+                    navigation.navigate('DriverList', {
+                      flow: 'assign',
+                      id: item._id,
+                    })
                   }
                   style={{
                     backgroundColor: colors.theme,
@@ -365,9 +393,18 @@ const VechicleInformation = ({route}) => {
 
                   <Switch
                     trackColor={{false: '#767577', true: colors.green}}
-                    thumbColor={vechicleStatus.main ? colors.placeholderColor : '#f4f3f4'}
+                    thumbColor={
+                      vechicleStatus.main ? colors.placeholderColor : '#f4f3f4'
+                    }
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setToggle(!toggle)}
+                    onValueChange={() =>
+                      // setToggle(!toggle)
+                      setVechicleStatus(pre => ({
+                        ...pre,
+                        main: !pre?.main,
+                        // intercity: !pre.outsation,
+                      }))
+                    }
                     value={vechicleStatus.main}
                   />
                 </View>
@@ -389,10 +426,19 @@ const VechicleInformation = ({route}) => {
 
                   <Switch
                     trackColor={{false: '#767577', true: colors.green}}
-                    thumbColor={toggle ? colors.placeholderColor : '#f4f3f4'}
+                    thumbColor={
+                      vechicleStatus?.intercity
+                        ? colors.placeholderColor
+                        : '#f4f3f4'
+                    }
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setToggle(!toggle)}
-                    value={toggle}
+                    onValueChange={() =>
+                      setVechicleStatus(pre => ({
+                        ...pre,
+                        intercity: !pre.intercity,
+                      }))
+                    }
+                    value={vechicleStatus.intercity}
                   />
                 </View>
 
@@ -413,10 +459,19 @@ const VechicleInformation = ({route}) => {
 
                   <Switch
                     trackColor={{false: '#767577', true: colors.green}}
-                    thumbColor={toggle ? colors.placeholderColor : '#f4f3f4'}
+                    thumbColor={
+                      vechicleStatus?.outsation
+                        ? colors.placeholderColor
+                        : '#f4f3f4'
+                    }
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => setToggle(!toggle)}
-                    value={toggle}
+                    onValueChange={() =>
+                      setVechicleStatus(pre => ({
+                        ...pre,
+                        outsation: !pre.outsation,
+                      }))
+                    }
+                    value={vechicleStatus.outsation}
                   />
                 </View>
 
@@ -437,11 +492,28 @@ const VechicleInformation = ({route}) => {
 
                   <Switch
                     trackColor={{false: '#767577', true: colors.green}}
+                    thumbColor={
+                      vechicleStatus?.rental
+                        ? colors.placeholderColor
+                        : '#f4f3f4'
+                    }
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() =>
+                      setVechicleStatus(pre => ({
+                        ...pre,
+                        rental: !pre.rental,
+                      }))
+                    }
+                    value={vechicleStatus.rental}
+                  />
+
+                  {/* <Switch
+                    trackColor={{false: '#767577', true: colors.green}}
                     thumbColor={toggle ? colors.placeholderColor : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => setToggle(!toggle)}
                     value={toggle}
-                  />
+                  /> */}
                 </View>
 
                 {/* bottom detaisl */}
@@ -532,6 +604,7 @@ const VechicleInformation = ({route}) => {
           marginVertical: moderateScale(20),
         }}>
         <TouchableOpacity
+        onPress={()=>navigation.navigate('EditVehicle', {item: item})}
           style={{
             width: '45%',
             backgroundColor: colors.darkGray,
@@ -544,6 +617,7 @@ const VechicleInformation = ({route}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+        onPress={()=>setDeleteModal(true)}
           style={{
             width: '45%',
             backgroundColor: colors.theme,
@@ -555,6 +629,13 @@ const VechicleInformation = ({route}) => {
           <Text14 mt={1} color={colors.white} text={'Delete'} />
         </TouchableOpacity>
       </View>
+
+      <DeleteModal
+        type={'Vechicle'}
+        deleteHandler={deleteVehicleHadler}
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+      />
     </View>
   );
 };

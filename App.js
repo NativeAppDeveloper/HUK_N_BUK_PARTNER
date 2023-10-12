@@ -20,6 +20,7 @@ import {useSelector} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import Loader from './src/component/modal/Loader';
 import {requestLocationPermission} from './src/utils/Permssion';
+import ErrorBoundary from './ErrorBoundary';
 
 export default function App() {
   const {stackName} = useSelector(state => state.ChangeStackReducer);
@@ -43,7 +44,7 @@ export default function App() {
  
 
   return (
-    <>
+    <ErrorBoundary>
       <StatusBar
         backgroundColor={'transparent'}
         translucent={true}
@@ -56,7 +57,7 @@ export default function App() {
         {/* {modalStatus&&} */}
         {modalStatus && <Loader />}
       </NavigationContainer>
-    </>
+    </ErrorBoundary>
   );
 }
 

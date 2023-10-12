@@ -225,6 +225,7 @@ const RcDetails = ({route}) => {
       </View>
 
       <DateTimePickerModal
+        minimumDate={new Date()}
         isVisible={isDatePickerVisible}
         mode="date"
         onConfirm={handleConfirm}

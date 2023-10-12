@@ -34,6 +34,7 @@ const Step2 = () => {
   const getStateList = async () => {
     try {
       let response = await getStateListServices();
+      console.log(response.data);
       let temp=response.data.states.map((d)=>{
         return {
           label:d.name,
@@ -50,7 +51,7 @@ const Step2 = () => {
     try {
       let response = await getCityListServices(isoCode);
 
-      // console.log(response.data)
+      console.log(response.data)
       let temp=response.data.cities.map((d)=>{
         return {
           label:d.name,

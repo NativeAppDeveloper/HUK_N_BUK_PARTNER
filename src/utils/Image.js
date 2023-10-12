@@ -105,6 +105,10 @@ import outStation from '../assets/images/outStation.png';
 import rentel from '../assets/images/rentel.png';
 import odometer from '../assets/images/odometer.png';
 
+import userIcon from '../assets/avatar.png'
+
+// userIcon
+
 // import profile from '../assets/images/profile.png'
 
 export const images = {
@@ -123,7 +127,8 @@ export const images = {
   c1: c1,
   c2: c2,
   unCheck:unCheck,
-  checkboxcheck:checkboxcheck
+  checkboxcheck:checkboxcheck,
+  userIcon:userIcon
   // profile:profile
 };
 

@@ -214,6 +214,7 @@ const InsuranceDetails = ({route}) => {
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        minimumDate={new Date()}
       />
 
       <UploadModal
